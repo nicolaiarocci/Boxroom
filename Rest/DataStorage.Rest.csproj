@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\DataStorage.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="WebApi\**" />
+    <Compile Remove="WebApi\**" />
+    <EmbeddedResource Remove="WebApi\**" />
+    <EmbeddedResource Remove="WebApi\**" />
+    <None Remove="WebApi\**" />
+    <None Remove="WebApi\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="newtonsoft.json" Version="11.0.2" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>
