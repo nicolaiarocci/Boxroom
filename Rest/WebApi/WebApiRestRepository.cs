@@ -38,11 +38,19 @@ namespace DataStorage.Rest
 
             ValidateProperties();
 
-
             var client = ClientWithHeaders();
 
             // TODO: more robust url building
             Response = await client.DeleteAsync($"{BaseAddress.ToString()}{DataSources[typeof(T)]}/{itemId}");
+        }
+        public override async Task Insert<T>(List<T> items)
+        {
+            ValidateProperties();
+
+            var client = ClientWithHeaders();
+
+            var content = new StringContent(JsonConvert.SerializeObject(items));
+            Response = await client.PostAsync($"{BaseAddress.ToString()}{DataSources[typeof(T)]}", content);
         }
     }
 
