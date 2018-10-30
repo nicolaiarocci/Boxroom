@@ -8,6 +8,11 @@ namespace DataStorage.Database.MongoDB
 {
     public class MongoDBDatabaseRepository : BaseDatabaseRepository
     {
+        public override async Task<List<T>> Get<T>()
+        {
+            ValidateProperties();
+            return (await Collection<T>().FindAsync(_ => true)).ToList();
+        }
         public override async Task<List<T>> Get<T>(Expression<Func<T, bool>> filter)
         {
             ValidateProperties();
