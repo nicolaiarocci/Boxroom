@@ -38,12 +38,12 @@ namespace DataStorage.Core
             throw new NotImplementedException();
         }
 
-        public virtual Task Insert<T>(T item)
+        public virtual Task<T> Insert<T>(T item)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task Insert<T>(List<T> items)
+        public virtual Task<List<T>> Insert<T>(List<T> items)
         {
             throw new NotImplementedException();
         }

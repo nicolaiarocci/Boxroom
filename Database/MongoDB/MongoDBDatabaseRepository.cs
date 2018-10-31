@@ -18,10 +18,11 @@ namespace DataStorage.Database.MongoDB
             ValidateProperties();
             return (await Collection<T>().FindAsync(filter)).ToList();
         }
-        public override async Task Insert<T>(List<T> items)
+        public override async Task<List<T>> Insert<T>(List<T> items)
         {
             ValidateProperties();
             await Collection<T>().InsertManyAsync(items);
+            return items;
         }
         public override async Task<T> Delete<T>(Expression<Func<T, bool>> filter)
         {
