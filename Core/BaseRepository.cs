@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace DataStorage.Core
@@ -14,11 +15,6 @@ namespace DataStorage.Core
         }
 
         public virtual Task Delete<T>(string itemId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual Task Delete<T>()
         {
             throw new NotImplementedException();
         }
@@ -48,6 +44,23 @@ namespace DataStorage.Core
             throw new NotImplementedException();
         }
 
+        public virtual Task<T> Replace<T>(T item)
+        {
+            throw new NotImplementedException();
+        }
+
         public abstract void ValidateProperties();
+        protected (string IdMemberName, object IdMemberValue) GetIdMemberNameAndValue<T>(T item)
+        {
+            string idMemberName = null;
+            object idMemberValue = null;
+
+            idMemberName = ClassMap.LookupClassMap(typeof(T)).IdMemberMap?.MemberName;
+            if (idMemberName != null)
+            {
+                idMemberValue = typeof(T).GetProperty(idMemberName).GetValue(item);
+            }
+            return (idMemberName, idMemberValue);
+        }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
+using DataStorage.Core;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace DataStorage.Database.MongoDB
@@ -23,6 +26,17 @@ namespace DataStorage.Database.MongoDB
             ValidateProperties();
             await Collection<T>().InsertManyAsync(items);
             return items;
+        }
+        public override async Task<T> Replace<T>(T item)
+        {
+            ValidateProperties();
+
+            var (idMemberName, idMemberValue) = GetIdMemberNameAndValue<T>(item);
+
+            var builder = Builders<T>.Filter;
+            var filter = builder.Eq(idMemberName, idMemberValue);
+
+            return await Collection<T>().FindOneAndReplaceAsync(filter, item);
         }
         public override async Task<T> Delete<T>(Expression<Func<T, bool>> filter)
         {

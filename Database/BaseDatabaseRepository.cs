@@ -15,7 +15,6 @@ namespace DataStorage.Database
         {
             throw new NotImplementedException();
         }
-
         public virtual Task<List<T>> Get<T>(Expression<Func<T, bool>> filter)
         {
             throw new NotImplementedException();
