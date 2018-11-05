@@ -62,15 +62,24 @@ namespace DataStorage.Rest
         {
             ValidateProperties();
 
-            var client = PreparedClient();
-            var (etagMemberName, etagMemberValue) = GetMemberNameAndValue<T>(item, "ETag");
-            if (etagMemberName == null) { }
+            // var (etagMemberName, etagMemberValue) = GetMemberNameAndValue<T>(item, RestMetaFields.ETag);
+            // if (etagMemberName != null)
+            // {
+            //     Headers["If-Match"] = etagMemberValue.ToString();
+            // }
+            // var (lastUpdatedMemberName, lastUpdatedMemberValue) = GetMemberNameAndValue<T>(item, RestMetaFields.LastUpdated);
+            // if (lastUpdatedMemberName != null)
+            // {
+            //     Headers["If-Modified-Since"] = lastUpdatedMemberValue.ToString();
+            // }
 
             var (idMemberName, idMemberValue) = GetIdMemberNameAndValue<T>(item);
             if (idMemberName == null)
             {
-                // TODO
+                // TODO throw
             }
+
+            var client = PreparedClient();
 
             var content = new StringContent(JsonConvert.SerializeObject(item));
 

@@ -9,8 +9,10 @@ namespace DataStorage.Core
     {
         public BaseRepository()
         {
-            if (ClassMap.AutoMapMembers.Contains(MetaFields.Id)) return;
-            ClassMap.AutoMapMembers.Add(MetaFields.Id);
+            if (!ClassMap.ShouldAutoMapMembers.Contains(MetaFields.Id))
+            {
+                ClassMap.ShouldAutoMapMembers.Add(MetaFields.Id);
+            }
         }
         public Dictionary<Type, string> DataSources { get; set; }
 

@@ -14,8 +14,10 @@ namespace DataStorage.Rest
         {
             foreach (var metaField in RestMetaFields.AsEnumerable())
             {
-                if (ClassMap.AutoMapMembers.Contains(metaField)) continue;
-                ClassMap.AutoMapMembers.Add(metaField);
+                if (!ClassMap.ShouldAutoMapMembers.Contains(metaField))
+                {
+                    ClassMap.ShouldAutoMapMembers.Add(metaField);
+                }
             }
         }
         public Uri BaseAddress { get; set; }

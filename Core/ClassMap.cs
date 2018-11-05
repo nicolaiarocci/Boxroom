@@ -11,7 +11,7 @@ namespace DataStorage.Core
         private readonly Type _classType;
         private readonly static Dictionary<Type, ClassMap> classMaps = new Dictionary<Type, ClassMap>();
         protected Dictionary<string, MemberMap> maps = new Dictionary<string, MemberMap>();
-        public static List<string> AutoMapMembers { get; } = new List<string> { };
+        public static List<string> ShouldAutoMapMembers { get; } = new List<string> { };
 
         public ClassMap(Type classType)
         {
@@ -84,7 +84,7 @@ namespace DataStorage.Core
         }
         public virtual void AutoMap()
         {
-            foreach (var memberName in AutoMapMembers)
+            foreach (var memberName in ShouldAutoMapMembers)
             {
                 var memberInfo = _classType.GetTypeInfo().GetMember(memberName).FirstOrDefault();
                 if (memberInfo == null) continue;
