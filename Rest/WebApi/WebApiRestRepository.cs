@@ -18,7 +18,7 @@ namespace DataStorage.Rest
         {
             ValidateProperties();
 
-            var client = ClientWithHeaders();
+            var client = PreparedClient();
 
             // TODO: more robust url building
             Response = await client.GetAsync($"{BaseAddress.ToString()}{DataSources[typeof(T)]}");
@@ -40,7 +40,7 @@ namespace DataStorage.Rest
 
             ValidateProperties();
 
-            var client = ClientWithHeaders();
+            var client = PreparedClient();
 
             // TODO: more robust url building
             Response = await client.DeleteAsync($"{BaseAddress.ToString()}{DataSources[typeof(T)]}/{itemId}");
@@ -49,7 +49,7 @@ namespace DataStorage.Rest
         {
             ValidateProperties();
 
-            var client = ClientWithHeaders();
+            var client = PreparedClient();
 
             var content = new StringContent(JsonConvert.SerializeObject(items));
             Response = await client.PostAsync($"{BaseAddress.ToString()}{DataSources[typeof(T)]}", content);
@@ -62,12 +62,14 @@ namespace DataStorage.Rest
         {
             ValidateProperties();
 
-            var client = ClientWithHeaders();
+            var client = PreparedClient();
+            var (etagMemberName, etagMemberValue) = GetMemberNameAndValue<T>(item, "ETag");
+            if (etagMemberName == null) { }
 
             var (idMemberName, idMemberValue) = GetIdMemberNameAndValue<T>(item);
             if (idMemberName == null)
             {
-                // TODO throw what? or..
+                // TODO
             }
 
             var content = new StringContent(JsonConvert.SerializeObject(item));

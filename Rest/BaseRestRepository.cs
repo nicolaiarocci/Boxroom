@@ -10,13 +10,22 @@ namespace DataStorage.Rest
 {
     public abstract class BaseRestRepository : BaseRepository, IRestRepository
     {
+        public BaseRestRepository()
+        {
+            foreach (var metaField in RestMetaFields.AsEnumerable())
+            {
+                if (ClassMap.AutoMapMembers.Contains(metaField)) continue;
+                ClassMap.AutoMapMembers.Add(metaField);
+            }
+        }
         public Uri BaseAddress { get; set; }
         public HttpClient HttpClient { get; set; }
         public HttpResponseMessage Response { get; set; }
         public Dictionary<string, string> Headers { get; set; }
-        public virtual HttpClient ClientWithHeaders()
+        public virtual HttpClient PreparedClient()
         {
 
+            // TODO does this re/initializes a client every single time a call is made to this method?
             var client = (HttpClient != null) ? HttpClient : new HttpClient();
 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

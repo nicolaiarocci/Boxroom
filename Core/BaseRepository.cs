@@ -7,6 +7,11 @@ namespace DataStorage.Core
 {
     public abstract class BaseRepository : IRepository
     {
+        public BaseRepository()
+        {
+            if (ClassMap.AutoMapMembers.Contains(MetaFields.Id)) return;
+            ClassMap.AutoMapMembers.Add(MetaFields.Id);
+        }
         public Dictionary<Type, string> DataSources { get; set; }
 
         public virtual Task Delete<T>(T item)
@@ -52,15 +57,19 @@ namespace DataStorage.Core
         public abstract void ValidateProperties();
         protected (string IdMemberName, object IdMemberValue) GetIdMemberNameAndValue<T>(T item)
         {
-            string idMemberName = null;
-            object idMemberValue = null;
+            return GetMemberNameAndValue(item, "Id");
+        }
+        protected (string MemberName, object MemberValue) GetMemberNameAndValue<T>(T item, string name)
+        {
+            string memberName = null;
+            object memberValue = null;
 
-            idMemberName = ClassMap.LookupClassMap(typeof(T)).IdMemberMap?.MemberName;
-            if (idMemberName != null)
+            memberName = ClassMap.LookupClassMap(typeof(T)).GetMap(name)?.MemberName;
+            if (memberName != null)
             {
-                idMemberValue = typeof(T).GetProperty(idMemberName).GetValue(item);
+                memberValue = typeof(T).GetProperty(memberName).GetValue(item);
             }
-            return (idMemberName, idMemberValue);
+            return (memberName, memberValue);
         }
     }
 }

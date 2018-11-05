@@ -31,6 +31,10 @@ namespace DataStorage.Database.MongoDB
         {
             ValidateProperties();
 
+            // TODO: id might be mapped with a BsonId attribute, or might have
+            // been mapped with a Mongo ClassMap.
+
+            // TODO: what if both values are null?
             var (idMemberName, idMemberValue) = GetIdMemberNameAndValue<T>(item);
 
             var builder = Builders<T>.Filter;

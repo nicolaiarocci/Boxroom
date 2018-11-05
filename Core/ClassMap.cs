@@ -10,8 +10,8 @@ namespace DataStorage.Core
     {
         private readonly Type _classType;
         private readonly static Dictionary<Type, ClassMap> classMaps = new Dictionary<Type, ClassMap>();
-        protected Dictionary<string, MemberMap> memberMaps = new Dictionary<string, MemberMap>();
-        protected const string IdName = "Id";
+        protected Dictionary<string, MemberMap> maps = new Dictionary<string, MemberMap>();
+        public static List<string> AutoMapMembers { get; } = new List<string> { };
 
         public ClassMap(Type classType)
         {
@@ -34,6 +34,64 @@ namespace DataStorage.Core
                 throw new ArgumentNullException(nameof(classMap));
             }
             classMaps.Add(classMap.ClassType, classMap);
+        }
+        public static ClassMap LookupClassMap(Type classType)
+        {
+            if (classType == null)
+            {
+                throw new ArgumentNullException(nameof(classType));
+            }
+
+            ClassMap classMap;
+            if (classMaps.TryGetValue(classType, out classMap))
+            {
+                return classMap;
+            }
+
+            var classMapDefinition = typeof(ClassMap<>);
+            var classMapType = classMapDefinition.MakeGenericType(classType);
+            classMap = (ClassMap)Activator.CreateInstance(classMapType);
+            classMap.AutoMap();
+            RegisterClassMap(classMap);
+
+            return classMap;
+        }
+
+        protected void StoreMap(MemberMap memberMap, string memberName)
+        {
+            if (memberMap == null)
+            {
+                throw new ArgumentNullException(nameof(memberMap));
+            }
+            if (memberName == null)
+            {
+                throw new ArgumentNullException(nameof(memberName));
+            }
+
+            EnsureMemberMapIsForThisClass(memberMap);
+
+            maps[memberName] = memberMap;
+        }
+        private void EnsureMemberMapIsForThisClass(MemberMap memberMap)
+        {
+            if (memberMap.ClassMap != this)
+            {
+                throw new ArgumentOutOfRangeException(
+                    "memberMap",
+                    $"The memberMap argument must be for class {_classType.Name}, but was for class {memberMap.ClassMap.ClassType.Name}."
+                    );
+            }
+        }
+        public virtual void AutoMap()
+        {
+            foreach (var memberName in AutoMapMembers)
+            {
+                var memberInfo = _classType.GetTypeInfo().GetMember(memberName).FirstOrDefault();
+                if (memberInfo == null) continue;
+
+                var memberMap = MapMember(memberInfo);
+                StoreMap(memberMap, memberName);
+            }
         }
         protected MemberMap MapMember(MemberInfo memberInfo)
         {
@@ -60,93 +118,14 @@ namespace DataStorage.Core
                     );
             }
         }
-
-        protected void SetIdMember(MemberMap memberMap)
+        public MemberMap GetMap(string memberName)
         {
-            if (memberMap == null)
+            MemberMap memberMap;
+            if (maps.TryGetValue(memberName, out memberMap))
             {
-                throw new ArgumentNullException(nameof(memberMap));
+                return memberMap;
             }
-
-            EnsureMemberMapIsForThisClass(memberMap);
-            SetMemberInMaps(IdName, memberMap);
-
-        }
-        protected void SetMemberInMaps(string key, MemberMap memberMap)
-        {
-            if (!memberMaps.ContainsKey(key))
-            {
-                memberMaps.Add(key, memberMap);
-            }
-            else
-            {
-                memberMaps[key] = memberMap;
-            }
-        }
-        private void EnsureMemberMapIsForThisClass(MemberMap memberMap)
-        {
-            if (memberMap.ClassMap != this)
-            {
-                throw new ArgumentOutOfRangeException(
-                    "memberMap",
-                    $"The memberMap argument must be for class {_classType.Name}, but was for class {memberMap.ClassMap.ClassType.Name}."
-                    );
-            }
-        }
-        public static ClassMap LookupClassMap(Type classType)
-        {
-            if (classType == null)
-            {
-                throw new ArgumentNullException(nameof(classType));
-            }
-
-            ClassMap classMap;
-            if (classMaps.TryGetValue(classType, out classMap))
-            {
-                return classMap;
-            }
-
-            if (!classMaps.TryGetValue(classType, out classMap))
-            {
-                var classMapDefinition = typeof(ClassMap<>);
-                var classMapType = classMapDefinition.MakeGenericType(classType);
-                classMap = (ClassMap)Activator.CreateInstance(classMapType);
-                classMap.AutoMap();
-                RegisterClassMap(classMap);
-            }
-            return classMap;
-        }
-        public virtual void AutoMap()
-        {
-            AutoMapIdMember();
-        }
-        protected void AutoMapIdMember()
-        {
-            var idMemberInfo = GetMemberInfoByName(IdName);
-            if (idMemberInfo == null) return;
-            MapIdMember(idMemberInfo);
-        }
-        private MemberMap MapIdMember(MemberInfo memberInfo)
-        {
-            var map = MapMember(memberInfo);
-            SetIdMember(map);
-            return map;
-        }
-        protected MemberInfo GetMemberInfoByName(string expectedMemberName)
-        {
-            return _classType.GetTypeInfo().GetMember(expectedMemberName).FirstOrDefault();
-        }
-        public MemberMap IdMemberMap
-        {
-            get
-            {
-                MemberMap idMemberMap;
-                if (memberMaps.TryGetValue(IdName, out idMemberMap))
-                {
-                    return idMemberMap;
-                }
-                return null;
-            }
+            return null;
         }
         public Type ClassType
         {
@@ -163,24 +142,16 @@ namespace DataStorage.Core
         {
             classMapInitializer(this);
         }
-
-        public MemberMap MapIdMember<TMember>(Expression<Func<TClass, TMember>> memberLambda)
+        public MemberMap MapMember<TMember>(Expression<Func<TClass, TMember>> memberLambda, string memberName)
         {
-            var map = MapMember(memberLambda);
-            SetIdMember(map);
-            return map;
-
+            var memberMap = MapMemberFromLambda(memberLambda);
+            StoreMap(memberMap, memberName);
+            return memberMap;
         }
-        private MemberMap MapMember<TMember>(Expression<Func<TClass, TMember>> propertyLambda)
+        protected MemberMap MapMemberFromLambda<TMember>(Expression<Func<TClass, TMember>> lambda)
         {
-            var memberInfo = GetMemberInfoFromLambda(propertyLambda);
+            var memberInfo = GetMemberInfoFromLambda(lambda);
             return MapMember(memberInfo);
-        }
-        public MemberMap MapMember<TMember>(string key, Expression<Func<TClass, TMember>> propertyLambda)
-        {
-            var map = MapMember(propertyLambda);
-            SetMemberInMaps(key, map);
-            return map;
         }
         private static MemberInfo GetMemberInfoFromLambda<TMember>(Expression<Func<TClass, TMember>> memberLambda)
         {
