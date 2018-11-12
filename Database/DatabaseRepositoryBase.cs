@@ -10,15 +10,6 @@ namespace DataStorage.Database
     {
         public string ConnectionString { get; set; }
         public string DataBaseName { get; set; }
-
-        public virtual Task<T> Delete<T>(Expression<Func<T, bool>> filter)
-        {
-            throw new NotImplementedException();
-        }
-        public virtual Task<List<T>> Get<T>(Expression<Func<T, bool>> filter)
-        {
-            throw new NotImplementedException();
-        }
         public override void ValidateProperties()
         {
 

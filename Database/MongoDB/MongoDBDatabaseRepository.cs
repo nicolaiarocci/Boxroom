@@ -14,11 +14,13 @@ namespace DataStorage.Database.MongoDB
         public override async Task<List<T>> Get<T>()
         {
             ValidateProperties();
+            // TODO bad performance (mongo driver returns a cursor)
             return (await Collection<T>().FindAsync(_ => true)).ToList();
         }
-        public override async Task<List<T>> Get<T>(Expression<Func<T, bool>> filter)
+        public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter)
         {
             ValidateProperties();
+            // TODO bad performance (mongo driver returns a cursor)
             return (await Collection<T>().FindAsync(filter)).ToList();
         }
         public override async Task<List<T>> Insert<T>(List<T> items)
@@ -49,12 +51,10 @@ namespace DataStorage.Database.MongoDB
         }
         private IMongoCollection<T> Collection<T>()
         {
-            return GetDatabase().GetCollection<T>(DataSources[typeof(T)]);
-        }
-        private IMongoDatabase GetDatabase()
-        {
+            // TODO make client a class-level field?
+            // performance should be optimized anyway (same connection string)
             var client = new MongoClient(ConnectionString);
-            return client.GetDatabase(DataBaseName);
+            return client.GetDatabase(DataBaseName).GetCollection<T>(DataSources[typeof(T)]);
         }
     }
 }

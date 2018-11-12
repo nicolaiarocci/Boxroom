@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -22,6 +23,16 @@ namespace DataStorage.Core
         }
 
         public virtual Task Delete<T>(string itemId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Task<T> Delete<T>(Expression<Func<T, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Task<List<T>> Find<T>(Expression<Func<T, bool>> filter)
         {
             throw new NotImplementedException();
         }
