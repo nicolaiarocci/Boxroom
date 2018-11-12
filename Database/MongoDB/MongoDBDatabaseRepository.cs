@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace DataStorage.Database.MongoDB
 {
-    public class MongoDBDatabaseRepository : BaseDatabaseRepository
+    public class MongoDBDatabaseRepository : DatabaseRepositoryBase
     {
         public override async Task<List<T>> Get<T>()
         {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -8,9 +8,9 @@ using DataStorage.Core;
 
 namespace DataStorage.Rest
 {
-    public abstract class BaseRestRepository : BaseRepository, IRestRepository
+    public abstract class RestRepositoryBase : RepositoryBase, IRestRepository
     {
-        public BaseRestRepository()
+        public RestRepositoryBase()
         {
             foreach (var metaField in RestMetaFields.AsEnumerable())
             {

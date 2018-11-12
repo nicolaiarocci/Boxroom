@@ -1,13 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 
 namespace DataStorage.Core
 {
-    public abstract class BaseRepository : IRepository
+    public abstract class RepositoryBase : IRepository
     {
-        public BaseRepository()
+        public RepositoryBase()
         {
             if (!ClassMap.ShouldAutoMapMembers.Contains(MetaFields.Id))
             {

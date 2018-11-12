@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -6,7 +6,7 @@ using DataStorage.Core;
 
 namespace DataStorage.Database
 {
-    public abstract class BaseDatabaseRepository : BaseRepository, IDatabaseRepository
+    public abstract class DatabaseRepositoryBase : RepositoryBase, IDatabaseRepository
     {
         public string ConnectionString { get; set; }
         public string DataBaseName { get; set; }

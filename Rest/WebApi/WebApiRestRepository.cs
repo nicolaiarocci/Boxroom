@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace DataStorage.Rest
 {
-    public class WebApiRestRepository : BaseRestRepository
+    public class WebApiRestRepository : RestRepositoryBase
 
     {
         public override async Task<List<T>> Get<T>()
