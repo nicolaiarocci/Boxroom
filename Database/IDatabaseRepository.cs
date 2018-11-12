@@ -10,6 +10,7 @@ namespace DataStorage.Database
     {
         string ConnectionString { get; set; }
         string DataBaseName { get; set; }
+        // TODO these two below should really move to IRepository
         Task<List<T>> Get<T>(Expression<Func<T, bool>> filter);
         Task<T> Delete<T>(Expression<Func<T, bool>> filter);
     }
