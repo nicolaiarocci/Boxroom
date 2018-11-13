@@ -11,16 +11,15 @@ namespace DataStorage.Database.MongoDB
 {
     public class MongoDBDatabaseRepository : DatabaseRepositoryBase
     {
-        public override async Task<List<T>> Get<T>()
+        public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, Core.FindOptions<T> options = null)
         {
             ValidateProperties();
-            // TODO bad performance (mongo driver returns a cursor)
-            return (await Collection<T>().FindAsync(_ => true)).ToList();
-        }
-        public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter)
-        {
-            ValidateProperties();
-            // TODO bad performance (mongo driver returns a cursor)
+            if (options != null)
+            {
+                // TODO: add support for IfModifedSince option
+                throw new ArgumentException($"{nameof(options)} currently not supported");
+            }
+
             return (await Collection<T>().FindAsync(filter)).ToList();
         }
         public override async Task<List<T>> Insert<T>(List<T> items)
