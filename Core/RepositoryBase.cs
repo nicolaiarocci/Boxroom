@@ -10,11 +10,15 @@ namespace DataStorage.Core
     {
         public RepositoryBase()
         {
-            if (!ClassMap.ShouldAutoMapMembers.Contains(MetaFields.Id))
+            foreach (var metaField in MetaFields.AsList())
             {
-                ClassMap.ShouldAutoMapMembers.Add(MetaFields.Id);
+                if (!ClassMap.ShouldAutoMapMembers.Contains(metaField))
+                {
+                    ClassMap.ShouldAutoMapMembers.Add(metaField);
+                }
             }
         }
+        public virtual MetaFields MetaFields => new MetaFields();
         public Dictionary<Type, string> DataSources { get; set; }
 
         public virtual Task Delete<T>(T item)
@@ -32,7 +36,7 @@ namespace DataStorage.Core
             throw new NotImplementedException();
         }
 
-        public virtual Task<List<T>> Find<T>(Expression<Func<T, bool>> filter)
+        public virtual Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, FindOptions<T> options = null)
         {
             throw new NotImplementedException();
         }
@@ -43,11 +47,6 @@ namespace DataStorage.Core
         }
 
         public virtual Task<T> Get<T>(string itemId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual Task<List<T>> Get<T>()
         {
             throw new NotImplementedException();
         }
@@ -68,21 +67,25 @@ namespace DataStorage.Core
         }
 
         public abstract void ValidateProperties();
-        protected (string IdMemberName, object IdMemberValue) GetIdMemberNameAndValue<T>(T item)
+        protected(string IdMemberName, object IdMemberValue) GetIdMemberNameAndValue<T>(T item)
         {
             return GetMemberNameAndValue(item, "Id");
         }
-        protected (string MemberName, object MemberValue) GetMemberNameAndValue<T>(T item, string name)
+        protected(string MemberName, object MemberValue) GetMemberNameAndValue<T>(T item, string name)
         {
             string memberName = null;
             object memberValue = null;
 
-            memberName = ClassMap.LookupClassMap(typeof(T)).GetMap(name)?.MemberName;
+            memberName = GetMemberName<T>(name);
             if (memberName != null)
             {
                 memberValue = typeof(T).GetProperty(memberName).GetValue(item);
             }
             return (memberName, memberValue);
+        }
+        protected string GetMemberName<T>(string name)
+        {
+            return ClassMap.LookupClassMap(typeof(T)).GetMap(name)?.MemberName;
         }
     }
 }

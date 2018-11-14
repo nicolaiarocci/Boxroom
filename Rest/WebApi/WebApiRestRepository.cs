@@ -14,9 +14,20 @@ namespace DataStorage.Rest
     public class WebApiRestRepository : RestRepositoryBase
 
     {
-        public override async Task<List<T>> Get<T>()
+        public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, Core.FindOptions<T> options = null)
         {
+            // TODO actually do take filter argument into consideration! 
+            // or raise if we only support a "findAll" filter type (hopefully not)
             ValidateProperties();
+
+            if (options != null && options.IfModifiedSince.HasValue)
+            {
+                var imsMemberName = GetMemberName<T>(MetaFields.LastUpdated);
+                if (imsMemberName != null)
+                {
+                    Headers.Add(imsMemberName, options.IfModifiedSince.Value.ToString("r"));
+                }
+            }
 
             var client = PreparedClient();
 

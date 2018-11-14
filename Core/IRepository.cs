@@ -9,8 +9,7 @@ namespace DataStorage.Core
     {
         Task<T> Get<T>(string itemId);
         Task<T> Get<T>(T item);
-        Task<List<T>> Get<T>();
-        Task<List<T>> Find<T>(Expression<Func<T, bool>> filter);
+        Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, FindOptions<T> options = null);
         Task<T> Insert<T>(T item);
         Task<List<T>> Insert<T>(List<T> items);
         Task Delete<T>(string itemId);
@@ -19,5 +18,6 @@ namespace DataStorage.Core
         Task<T> Delete<T>(Expression<Func<T, bool>> filter);
         void ValidateProperties();
         Dictionary<Type, string> DataSources { get; set; }
+        MetaFields MetaFields { get; }
     }
 }

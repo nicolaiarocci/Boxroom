@@ -10,16 +10,7 @@ namespace DataStorage.Rest
 {
     public abstract class RestRepositoryBase : RepositoryBase, IRestRepository
     {
-        public RestRepositoryBase()
-        {
-            foreach (var metaField in RestMetaFields.AsEnumerable())
-            {
-                if (!ClassMap.ShouldAutoMapMembers.Contains(metaField))
-                {
-                    ClassMap.ShouldAutoMapMembers.Add(metaField);
-                }
-            }
-        }
+        public override MetaFields MetaFields => new RestMetaFields();
         public Uri BaseAddress { get; set; }
         public HttpClient HttpClient { get; set; }
         public HttpResponseMessage Response { get; set; }
