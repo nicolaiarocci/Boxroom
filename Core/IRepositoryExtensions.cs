@@ -6,9 +6,9 @@ namespace DataStorage.Core
 {
     public static class IRepositoryExtensions
     {
-        public static Task<List<T>> Get<T>(this IRepository repository)
+        public static Task<List<T>> Find<T>(this IRepository repository, FindOptions<T> options = null)
         {
-            return repository.Find<T>(_ => true);
+            return repository.Find<T>(_ => true, options);
         }
     }
 }
