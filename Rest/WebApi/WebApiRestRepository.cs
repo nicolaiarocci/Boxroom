@@ -16,8 +16,8 @@ namespace DataStorage.Rest
     {
         public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, IFindOptions<T> options = null)
         {
-            // TODO actually do take filter argument into consideration! 
-            // or raise if we only support a "findAll" filter type (hopefully not)
+            // TODO actually do take 'filter' into consideration. 
+            // (ExpressionVisitor subclass). See #8.
 
             ValidateProperties();
 
