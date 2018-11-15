@@ -21,7 +21,7 @@ namespace DataStorage.Rest
 
             ValidateProperties();
 
-            EnsureIfModifiedSinceHeader((FindOptions<T>) options);
+            EnsureHeader.IfModifiedSince(options);
 
             var client = PreparedClient();
 
@@ -67,21 +67,10 @@ namespace DataStorage.Rest
         {
             ValidateProperties();
 
-            // var (etagMemberName, etagMemberValue) = GetMemberNameAndValue<T>(item, RestMetaFields.ETag);
-            // if (etagMemberName != null)
-            // {
-            //     Headers["If-Match"] = etagMemberValue.ToString();
-            // }
-            // var (lastUpdatedMemberName, lastUpdatedMemberValue) = GetMemberNameAndValue<T>(item, RestMetaFields.LastUpdated);
-            // if (lastUpdatedMemberName != null)
-            // {
-            //     Headers["If-Modified-Since"] = lastUpdatedMemberValue.ToString();
-            // }
-
             var (idMemberName, idMemberValue) = GetIdMemberNameAndValue<T>(item);
             if (idMemberName == null)
             {
-                // TODO throw
+                // TODO throw?
             }
 
             var client = PreparedClient();
@@ -95,19 +84,6 @@ namespace DataStorage.Rest
             return JsonConvert.DeserializeObject<T>(json);
 
         }
-        private void EnsureIfModifiedSinceHeader<T>(FindOptions<T> options)
-        {
-
-            if (options == null || !options.IfModifiedSince.HasValue) return;
-            Headers.Add("If-Modified-Since", options.IfModifiedSince.Value.ToString("r"));
-        }
-        private void EnsureIfNoneMatchHeader<T>(FindOptions<T> options)
-        {
-
-            if (options == null || options.ETag == null) return;
-            Headers.Add("If-None-Match", options.ETag);
-        }
-
     }
 
 }
