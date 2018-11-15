@@ -30,7 +30,7 @@ namespace DataStorage.Core
             throw new NotImplementedException();
         }
 
-        public virtual Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, FindOptions<T> options = null)
+        public virtual Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, IFindOptions<T> options = null)
         {
             throw new NotImplementedException();
         }

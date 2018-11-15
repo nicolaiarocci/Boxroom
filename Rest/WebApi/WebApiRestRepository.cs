@@ -14,16 +14,14 @@ namespace DataStorage.Rest
     public class WebApiRestRepository : RestRepositoryBase
 
     {
-        public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, Core.FindOptions<T> options = null)
+        public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, IFindOptions<T> options = null)
         {
             // TODO actually do take filter argument into consideration! 
             // or raise if we only support a "findAll" filter type (hopefully not)
+
             ValidateProperties();
 
-            if (options != null && options.IfModifiedSince.HasValue)
-            {
-                Headers.Add("If-Modified-Since", options.IfModifiedSince.Value.ToString("r"));
-            }
+            EnsureIfModifiedSinceHeader((FindOptions<T>) options);
 
             var client = PreparedClient();
 
@@ -97,6 +95,19 @@ namespace DataStorage.Rest
             return JsonConvert.DeserializeObject<T>(json);
 
         }
+        private void EnsureIfModifiedSinceHeader<T>(FindOptions<T> options)
+        {
+
+            if (options == null || !options.IfModifiedSince.HasValue) return;
+            Headers.Add("If-Modified-Since", options.IfModifiedSince.Value.ToString("r"));
+        }
+        private void EnsureIfNoneMatchHeader<T>(FindOptions<T> options)
+        {
+
+            if (options == null || options.ETag == null) return;
+            Headers.Add("If-None-Match", options.ETag);
+        }
+
     }
 
 }

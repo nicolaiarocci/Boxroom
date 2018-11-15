@@ -11,7 +11,7 @@ namespace DataStorage.Database.MongoDB
 {
     public class MongoDBDatabaseRepository : DatabaseRepositoryBase
     {
-        public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, Core.FindOptions<T> options = null)
+        public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, IFindOptions<T> options = null)
         {
             ValidateProperties();
 
@@ -25,7 +25,7 @@ namespace DataStorage.Database.MongoDB
 
             return (await Collection<T>().FindAsync(Builders<T>.Filter.And(filters))).ToList();
         }
-        private Expression<Func<T, bool>> CreateIfModifiedFilterExperssion<T>(Core.FindOptions<T> options)
+        private Expression<Func<T, bool>> CreateIfModifiedFilterExperssion<T>(IFindOptions<T> options)
         {
             if (options == null | !options.IfModifiedSince.HasValue) return null;
             var entity = Expression.Parameter(typeof(T));
