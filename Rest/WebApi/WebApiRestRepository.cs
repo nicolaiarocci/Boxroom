@@ -22,11 +22,7 @@ namespace DataStorage.Rest
 
             if (options != null && options.IfModifiedSince.HasValue)
             {
-                var imsMemberName = GetMemberName<T>(MetaFields.LastUpdated);
-                if (imsMemberName != null)
-                {
-                    Headers.Add(imsMemberName, options.IfModifiedSince.Value.ToString("r"));
-                }
+                Headers.Add("If-Modified-Since", options.IfModifiedSince.Value.ToString("r"));
             }
 
             var client = PreparedClient();

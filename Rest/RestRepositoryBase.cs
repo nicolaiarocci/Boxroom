@@ -10,7 +10,7 @@ namespace DataStorage.Rest
 {
     public abstract class RestRepositoryBase : RepositoryBase, IRestRepository
     {
-        public override MetaFields MetaFields => new RestMetaFields();
+        public override MetaFields MetaFields { get; } = new RestMetaFields();
         public Uri BaseAddress { get; set; }
         public HttpClient HttpClient { get; set; }
         public HttpResponseMessage Response { get; set; }

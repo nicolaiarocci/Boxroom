@@ -14,13 +14,26 @@ namespace DataStorage.Database.MongoDB
         public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, Core.FindOptions<T> options = null)
         {
             ValidateProperties();
-            if (options != null)
+
+            var filters = new List<FilterDefinition<T>> { new ExpressionFilterDefinition<T>(filter) };
+
+            var ifModifedSinceExpression = CreateIfModifiedFilterExperssion(options);
+            if (ifModifedSinceExpression != null)
             {
-                // TODO: add support for IfModifedSince option
-                throw new ArgumentException($"{nameof(options)} currently not supported");
+                filters.Add(ifModifedSinceExpression);
             }
 
-            return (await Collection<T>().FindAsync(filter)).ToList();
+            return (await Collection<T>().FindAsync(Builders<T>.Filter.And(filters))).ToList();
+        }
+        private Expression<Func<T, bool>> CreateIfModifiedFilterExperssion<T>(Core.FindOptions<T> options)
+        {
+            if (options == null | !options.IfModifiedSince.HasValue) return null;
+            var entity = Expression.Parameter(typeof(T));
+            var body = Expression.GreaterThan(
+                Expression.Property(entity, MetaFields.LastUpdated),
+                Expression.Constant(options.IfModifiedSince.GetValueOrDefault()));
+
+            return Expression.Lambda<Func<T, bool>>(body, entity);
         }
         public override async Task<List<T>> Insert<T>(List<T> items)
         {

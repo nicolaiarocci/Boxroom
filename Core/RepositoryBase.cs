@@ -10,15 +10,9 @@ namespace DataStorage.Core
     {
         public RepositoryBase()
         {
-            foreach (var metaField in MetaFields.AsList())
-            {
-                if (!ClassMap.ShouldAutoMapMembers.Contains(metaField))
-                {
-                    ClassMap.ShouldAutoMapMembers.Add(metaField);
-                }
-            }
+            EnsureMetaFieldsAreMapped();
         }
-        public virtual MetaFields MetaFields => new MetaFields();
+        public virtual MetaFields MetaFields { get; } = new MetaFields();
         public Dictionary<Type, string> DataSources { get; set; }
 
         public virtual Task Delete<T>(T item)
@@ -86,6 +80,16 @@ namespace DataStorage.Core
         protected string GetMemberName<T>(string name)
         {
             return ClassMap.LookupClassMap(typeof(T)).GetMap(name)?.MemberName;
+        }
+        private void EnsureMetaFieldsAreMapped()
+        {
+            foreach (var metaField in MetaFields.AsList())
+            {
+                if (!ClassMap.ShouldAutoMapMembers.Contains(metaField))
+                {
+                    ClassMap.ShouldAutoMapMembers.Add(metaField);
+                }
+            }
         }
     }
 }
