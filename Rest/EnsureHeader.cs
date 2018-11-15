@@ -16,7 +16,7 @@ namespace DataStorage.Rest
             }
             repository.Headers.Add("If-Modified-Since", options.IfModifiedSince.Value.ToString("r"));
         }
-        public static void IfNoneMatch<T>(this IRestRepository repository, FindOptions<T> options)
+        public static void IfNoneMatch<T>(this IRestRepository repository, RestFindOptions<T> options)
         {
             if (options == null)
             {

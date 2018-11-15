@@ -21,7 +21,8 @@ namespace DataStorage.Rest
 
             ValidateProperties();
 
-            EnsureHeader.IfModifiedSince(options);
+            // TODO: why do I have to explictly pass 'this', otherwise I get an error? Shoud be an extension method.
+            EnsureHeader.IfModifiedSince(this, options);
 
             var client = PreparedClient();
 
