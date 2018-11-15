@@ -15,7 +15,11 @@ namespace DataStorage.Database.MongoDB
         {
             ValidateProperties();
 
-            var filters = new List<FilterDefinition<T>> { new ExpressionFilterDefinition<T>(filter) };
+            var filters = new List<FilterDefinition<T>>();
+
+            filters.Add(filter == null ?
+                new ExpressionFilterDefinition<T>(_ => true) :
+                new ExpressionFilterDefinition<T>(filter));
 
             var ifModifedSinceExpression = CreateIfModifiedFilterExperssion(options);
             if (ifModifedSinceExpression != null)
@@ -27,7 +31,7 @@ namespace DataStorage.Database.MongoDB
         }
         private Expression<Func<T, bool>> CreateIfModifiedFilterExperssion<T>(IFindOptions<T> options)
         {
-            if (options == null | !options.IfModifiedSince.HasValue) return null;
+            if (options == null || !options.IfModifiedSince.HasValue) return null;
             var entity = Expression.Parameter(typeof(T));
             var body = Expression.GreaterThan(
                 Expression.Property(entity, MetaFields.LastUpdated),

@@ -8,7 +8,7 @@ namespace DataStorage.Core
     {
         public static Task<List<T>> Find<T>(this IRepository repository, IFindOptions<T> options = null)
         {
-            return repository.Find<T>(_ => true, options);
+            return repository.Find<T>(null, options);
         }
     }
 }
