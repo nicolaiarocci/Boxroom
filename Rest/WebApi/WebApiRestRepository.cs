@@ -21,8 +21,8 @@ namespace DataStorage.Rest
                 return null;
             }
 
-            // TODO actually do parse 'filter'.
-            // (by implementing a Expression Visitor pattern). See #8.
+            // TODO actually parse 'filter'.
+            // By implementing a Expression Visitor pattern. See #8.
             throw new NotImplementedException();
         }
     }

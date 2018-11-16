@@ -11,7 +11,7 @@ namespace DataStorage.Core
         private readonly Type _classType;
         private readonly static Dictionary<Type, ClassMap> classMaps = new Dictionary<Type, ClassMap>();
         protected Dictionary<string, MemberMap> maps = new Dictionary<string, MemberMap>();
-        public static List<string> ShouldAutoMapMembers { get; } = new List<string> { };
+        public static List<string> ShouldAutoMapMembers { get; } = new List<string> {};
 
         public ClassMap(Type classType)
         {
@@ -33,6 +33,10 @@ namespace DataStorage.Core
             {
                 throw new ArgumentNullException(nameof(classMap));
             }
+            if (classMaps.ContainsKey(classMap.ClassType))
+            {
+                return;
+            }
             classMaps.Add(classMap.ClassType, classMap);
         }
         public static ClassMap LookupClassMap(Type classType)
@@ -50,7 +54,7 @@ namespace DataStorage.Core
 
             var classMapDefinition = typeof(ClassMap<>);
             var classMapType = classMapDefinition.MakeGenericType(classType);
-            classMap = (ClassMap)Activator.CreateInstance(classMapType);
+            classMap = (ClassMap) Activator.CreateInstance(classMapType);
             classMap.AutoMap();
             RegisterClassMap(classMap);
 
@@ -79,7 +83,7 @@ namespace DataStorage.Core
                 throw new ArgumentOutOfRangeException(
                     "memberMap",
                     $"The memberMap argument must be for class {_classType.Name}, but was for class {memberMap.ClassMap.ClassType.Name}."
-                    );
+                );
             }
         }
         public virtual void AutoMap()
@@ -115,11 +119,16 @@ namespace DataStorage.Core
                 throw new ArgumentOutOfRangeException(
                     "memberInfo",
                     $"The memberInfo argument must be for class {_classType.Name}, but was for class {memberInfo.DeclaringType.Name}."
-                    );
+                );
             }
         }
         public MemberMap GetMap(string memberName)
         {
+            if (memberName == null)
+            {
+                throw new ArgumentNullException(nameof(memberName));
+            }
+
             MemberMap memberMap;
             if (maps.TryGetValue(memberName, out memberMap))
             {
@@ -134,9 +143,7 @@ namespace DataStorage.Core
     }
     public class ClassMap<TClass> : ClassMap
     {
-        public ClassMap() : base(typeof(TClass))
-        {
-        }
+        public ClassMap() : base(typeof(TClass)) {}
 
         public ClassMap(Action<ClassMap<TClass>> classMapInitializer) : base(typeof(TClass))
         {
@@ -160,11 +167,11 @@ namespace DataStorage.Core
             switch (body.NodeType)
             {
                 case ExpressionType.MemberAccess:
-                    memberExpression = (MemberExpression)body;
+                    memberExpression = (MemberExpression) body;
                     break;
                 case ExpressionType.Convert:
-                    var convertExpression = (UnaryExpression)body;
-                    memberExpression = (MemberExpression)convertExpression.Operand;
+                    var convertExpression = (UnaryExpression) body;
+                    memberExpression = (MemberExpression) convertExpression.Operand;
                     break;
                 default:
                     throw new ArgumentException("Invalid lambda expression");
@@ -174,7 +181,7 @@ namespace DataStorage.Core
             {
                 if (memberInfo.DeclaringType.GetTypeInfo().IsInterface)
                 {
-                    memberInfo = FindPropertyImplementation((PropertyInfo)memberInfo, typeof(TClass));
+                    memberInfo = FindPropertyImplementation((PropertyInfo) memberInfo, typeof(TClass));
                 }
             }
             else if (!(memberInfo is FieldInfo))
