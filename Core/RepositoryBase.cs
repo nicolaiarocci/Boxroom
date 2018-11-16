@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace DataStorage.Core
@@ -10,7 +11,7 @@ namespace DataStorage.Core
     {
         public RepositoryBase()
         {
-            EnsureMetaFieldsAreMapped();
+            EnsureMetaFieldsShouldBeAutoMapped();
         }
         public virtual MetaFields MetaFields { get; } = new MetaFields();
         public Dictionary<Type, string> DataSources { get; set; }
@@ -81,7 +82,7 @@ namespace DataStorage.Core
         {
             return ClassMap.LookupClassMap(typeof(T)).GetMap(name)?.MemberName;
         }
-        private void EnsureMetaFieldsAreMapped()
+        private void EnsureMetaFieldsShouldBeAutoMapped()
         {
             foreach (var metaField in MetaFields.AsList())
             {
