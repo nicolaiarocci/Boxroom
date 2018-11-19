@@ -14,13 +14,6 @@ namespace Test
     {
 
         [Test]
-        public void FindThrowsWhenFilterIsNull()
-        {
-            var nullException = Assert.ThrowsAsync<ArgumentNullException>(async() => await Repository.Find<Class>(filter: null));
-            Assert.AreEqual("filter", nullException.ParamName);
-        }
-
-        [Test]
         public void ReplaceRepositoryPropertiesAreValidated()
         {
             RepositoryPropertiesAreValidated(async() => await Repository.Find<Class>(x => x.Name == "a name"));

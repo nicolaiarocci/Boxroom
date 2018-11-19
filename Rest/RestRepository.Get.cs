@@ -15,10 +15,6 @@ namespace DataStorage.Rest
     {
         public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, IFindOptions<T> options = null)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
             ValidateProperties();
 
             // TODO: why do I have to explictly pass 'this', otherwise I get an error? Shoud be an extension method.
