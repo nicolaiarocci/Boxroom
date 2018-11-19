@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace DataStorage.Rest
 {
-    public abstract partial class RestRepositoryBase : RepositoryBase, IRestRepository
+    public abstract partial class RestRepository : RepositoryBase, IRestRepository
     {
         public override Core.MetaFields MetaFields { get; } = new MetaFields();
         public Uri BaseAddress { get; set; }

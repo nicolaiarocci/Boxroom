@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace DataStorage.Rest
 {
-    public class WebApiRestRepository : RestRepositoryBase
+    public class WebApiRestRepository : RestRepository
 
     {
         public override string Render<T>(Expression<Func<T, bool>> filter)

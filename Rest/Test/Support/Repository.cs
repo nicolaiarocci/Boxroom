@@ -4,7 +4,7 @@ using DataStorage.Rest;
 
 namespace Test
 {
-    public class Repository : RestRepositoryBase
+    public class Repository : RestRepository
     {
         public override string Render<T>(Expression<Func<T, bool>> filter)
         {

@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace DataStorage.Rest
 {
-    public abstract partial class RestRepositoryBase : RepositoryBase
+    public abstract partial class RestRepository : RepositoryBase
     {
         public override async Task<List<T>> Insert<T>(List<T> items)
         {
