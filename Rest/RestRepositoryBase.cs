@@ -17,10 +17,14 @@ namespace DataStorage.Rest
         public Uri BaseAddress { get; set; }
         public HttpClient HttpClient { get; set; }
         public HttpResponseMessage Response { get; set; }
-        public Dictionary<string, string> Headers { get; set; }
+        public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
         protected abstract string Render<T>(Expression<Func<T, bool>> filter);
         public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, IFindOptions<T> options = null)
         {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
             ValidateProperties();
 
             // TODO: why do I have to explictly pass 'this', otherwise I get an error? Shoud be an extension method.
@@ -57,6 +61,15 @@ namespace DataStorage.Rest
         }
         public override async Task<List<T>> Insert<T>(List<T> items)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+            if (items.Count == 0)
+            {
+                throw new ArgumentException($"{nameof(items)} cannot be empty", nameof(items));
+            }
+
             ValidateProperties();
 
             var client = PreparedClient();
@@ -70,6 +83,11 @@ namespace DataStorage.Rest
         }
         public override async Task<T> Replace<T>(T item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
             ValidateProperties();
 
             var (idMemberName, idMemberValue) = GetIdMemberNameAndValue<T>(item);
