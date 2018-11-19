@@ -30,6 +30,8 @@ namespace Test
         {
 
             var challenge = DateTime.Now;
+            Repository.Headers = null;
+
             EnsureHeader.IfModifiedSince<Class>(Repository, new RestFindOptions<Class> { IfModifiedSince = challenge });
 
             Assert.IsTrue(Repository.Headers.ContainsKey("If-Modified-Since"));
@@ -41,7 +43,7 @@ namespace Test
         }
 
         [Test]
-        public void IfNoneMaatchHeaderNotAddedWithNullArguments()
+        public void IfNoneMatchHeaderNotAddedWithNullArguments()
         {
             EnsureHeader.IfNoneMatch<Class>(Repository, null);
             Assert.IsFalse(Repository.Headers.ContainsKey("If-None-Match"));
@@ -54,6 +56,7 @@ namespace Test
         public void IfNoneMatchHeaderAddedWithValidArgument()
         {
 
+            Repository.Headers = null;
             EnsureHeader.IfNoneMatch<Class>(Repository, new RestFindOptions<Class> { ETag = "etag" });
 
             Assert.IsTrue(Repository.Headers.ContainsKey("If-None-Match"));

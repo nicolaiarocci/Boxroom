@@ -17,7 +17,7 @@ namespace DataStorage.Rest
         public Uri BaseAddress { get; set; }
         public HttpClient HttpClient { get; set; }
         public HttpResponseMessage Response { get; set; }
-        public Dictionary<string, string> Headers { get; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
         public abstract string Render<T>(Expression<Func<T, bool>> filter);
         public virtual HttpClient PreparedClient()
         {
@@ -27,11 +27,13 @@ namespace DataStorage.Rest
 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            foreach (var header in Headers)
+            if (Headers != null)
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation(header.Key, header.Value);
+                foreach (var header in Headers)
+                {
+                    client.DefaultRequestHeaders.TryAddWithoutValidation(header.Key, header.Value);
+                }
             }
-
             return client;
         }
 

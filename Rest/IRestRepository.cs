@@ -11,6 +11,6 @@ namespace DataStorage.Rest
         Uri BaseAddress { get; set; }
         HttpClient HttpClient { get; set; }
         HttpResponseMessage Response { get; set; }
-        Dictionary<string, string> Headers { get; }
+        Dictionary<string, string> Headers { get; set; }
     }
 }
