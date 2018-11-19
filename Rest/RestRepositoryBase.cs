@@ -18,7 +18,7 @@ namespace DataStorage.Rest
         public HttpClient HttpClient { get; set; }
         public HttpResponseMessage Response { get; set; }
         public Dictionary<string, string> Headers { get; } = new Dictionary<string, string>();
-        protected abstract string Render<T>(Expression<Func<T, bool>> filter);
+        public abstract string Render<T>(Expression<Func<T, bool>> filter);
         public virtual HttpClient PreparedClient()
         {
 

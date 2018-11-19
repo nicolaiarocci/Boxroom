@@ -14,7 +14,7 @@ namespace DataStorage.Rest
     public class WebApiRestRepository : RestRepositoryBase
 
     {
-        protected override string Render<T>(Expression<Func<T, bool>> filter)
+        public override string Render<T>(Expression<Func<T, bool>> filter)
         {
             if (filter == null)
             {

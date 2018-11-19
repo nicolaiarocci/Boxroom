@@ -9,6 +9,7 @@
     <EmbeddedResource Remove="WebApi\**" />
     <None Remove="WebApi\**" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Remove="Test\**" />
     <EmbeddedResource Remove="Test\**" />

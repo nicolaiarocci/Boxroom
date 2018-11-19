@@ -6,7 +6,7 @@ namespace Test
 {
     public class Repository : RestRepositoryBase
     {
-        protected override string Render<T>(Expression<Func<T, bool>> filter)
+        public override string Render<T>(Expression<Func<T, bool>> filter)
         {
             return "?test=me";
         }
