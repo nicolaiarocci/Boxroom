@@ -7,31 +7,53 @@ uniform, yet simple interface. Currently, REST services and databases (either
 SQL or NoSQL) are primary targets.
 
 ```cs
-    // Perform a lookup against a database box.
-    IDatabaseBox db = new MongoDatabaseBox()
+    static async Task DoWork()
     {
-        ConnectionString = "mongodb://localhost:27017/my_database",
-        DataSources = new Dictionary<Type, string> {
-            { typeof(Customer), "customers" },
-            { typeof(Invoice), "invoices" },
-        };
-    };
-    var customers = await box.Find<Customer>(c => c.Name == "John");
+        // IDatabaseBox and IRestBox both inherit from IBox.
+        IDatabaseBox database = MongoBox();
+        IRestBox remote = WebApiBox();
 
-    // Same lookup, against a rest service box.
-    IRestBox restService = new WebApiRestBox()
+        var customer = new Customer { Name = "John Doe" };
+        var invoice = new Invoice { Number = "ABC/123" };
+
+        // Insert<T> (and other CRUD methods) are all defined by IBox.
+        await remote.Insert(customer);
+        await database.Insert(invoice);
+
+        // Lookups also work alike, no matter where and how data is stored.
+        var brooklynCustomers = await database.Find<Customer>(c => c.Zip == "11201");
+        var invoices = await remote.Find<Invoice>(inv => inv.Date >= DateTime.Now.AddDays(-10), new FindOptions<Invoice> { IfModifiedSince = DateTime.Now.Date });
+
+        Console.WriteLine($"We got back {brooklynCustomers.Count} customers and {invoices.Count} invoices");
+    }
+
+    static IDatabaseBox MongoBox()
     {
-        BaseAddress = new Uri("https://myservice.com"),
-        DataSources = new Dictionary<Type, string> {
-            { typeof(Customer), "/api/customers" },
-            { typeof(Invoice), "/api/invoices" },
+        return new MongoDatabaseBox()
+        {
+            ConnectionString = "mongodb://localhost:27017/my_database",
+            // In the context of database boxes, DataSources maps types to tables/collections.
+            DataSources = new Dictionary<Type, string> {
+                { typeof (Customer), "customers" },
+                { typeof (Invoice), "invoices" }
+            }
         };
-    };
-    // Same search, but only return if objects have been modified since 10 days ago.
-    customers = await restService.Find<Customer>(c => c.Name == "John", new FindOptions<Customer> {IfModifiedSince = DateTime.Now.AddDays(-10)});
+    }
+    static IRestBox WebApiBox()
+    {
+        return new WebApiRestBox()
+        {
+            BaseAddress = new Uri("https://myservice.com"),
+            // In the context of rest boxes, DataSources maps types to endpoints.
+            DataSources = new Dictionary<Type, string> {
+                { typeof (Customer), "/api/customers" },
+                { typeof (Invoice), "/api/invoices" }
+            }
+        };
+    }
 ```
 
-Projects available:
+Available projects:
 
 - `Boxroom.Core`: core classes and interfaces
 - `Boxroom.Database`: Database base classes and inerfaces

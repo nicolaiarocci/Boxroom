@@ -8,37 +8,56 @@ using Boxroom.Rest;
 
 namespace DemoApp
 {
+
     class Program
     {
+
         static void Main(string[] args)
         {
-            // Perform a lookup against a database box.
-            IDatabaseBox db = new MongoDatabaseBox()
+            DoWork().Wait();
+        }
+        static async Task DoWork()
+        {
+            // IDatabaseBox and IRestBox both inherit from IBox.
+            IDatabaseBox database = MongoBox();
+            IRestBox remote = WebApiBox();
+
+            var customer = new Customer { Name = "John Doe" };
+            var invoice = new Invoice { Number = "ABC/123" };
+
+            // Insert<T> (and other CRUD methods) are all defined by IBox.
+            await remote.Insert(customer);
+            await database.Insert(invoice);
+
+            // Lookups also work alike, no matter where and how data is stored.
+            var brooklynCustomers = await database.Find<Customer>(c => c.Zip == "11201");
+            var invoices = await remote.Find<Invoice>(inv => inv.Date >= DateTime.Now.AddDays(-10), new FindOptions<Invoice> { IfModifiedSince = DateTime.Now.Date });
+
+            Console.WriteLine($"We got back {brooklynCustomers.Count} customers and {invoices.Count} invoices");
+        }
+        static IDatabaseBox MongoBox()
+        {
+            return new MongoDatabaseBox()
             {
                 ConnectionString = "mongodb://localhost:27017/my_database",
-                DataSources = new Dictionary<Type, string>
-                { { typeof(Customer), "customers" },
-                { typeof(Invoice), "invoices" },
-                }
+                // In the context of database boxes, DataSources maps types to tables/collections.
+                DataSources = new Dictionary<Type, string> {
+                { typeof (Customer), "customers" },
+                { typeof (Invoice), "invoices" }
+            }
             };
-            var customers = Search<Customer>(db, c => c.Name == "John");
-
-            // Same lookup, against a rest service box.
-            IRestBox restService = new WebApiRestBox()
+        }
+        static IRestBox WebApiBox()
+        {
+            return new WebApiRestBox()
             {
                 BaseAddress = new Uri("https://myservice.com"),
-                DataSources = new Dictionary<Type, string>
-                { { typeof(Customer), "/api/customers" },
-                { typeof(Invoice), "/api/invoices" },
-                }
+                // In the context of rest boxes, DataSources maps types to endpoints.
+                DataSources = new Dictionary<Type, string> {
+                { typeof (Customer), "/api/customers" },
+                { typeof (Invoice), "/api/invoices" }
+            }
             };
-            // Same search but, just for the sake of it, this time only return 
-            // objects that have been modified since 10 days ago.
-            customers = Search<Customer>(restService, c => c.Name == "John", new FindOptions<Customer> { IfModifiedSince = DateTime.Now.AddDays(-10) });
-        }
-        static async Task<List<T>> Search<T>(IBox box, Expression<Func<T, bool>> filter, FindOptions<T> options = null)
-        {
-            return await box.Find<T>(filter, options);
         }
     }
 }
