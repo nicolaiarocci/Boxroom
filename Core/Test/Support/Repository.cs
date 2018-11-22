@@ -3,7 +3,7 @@ using Boxroom.Core;
 
 namespace Test
 {
-    public class Boxroom : BoxroomBase
+    public class Boxroom : BoxBase
     {
         public override void ValidateProperties()
         {

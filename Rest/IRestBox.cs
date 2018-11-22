@@ -6,7 +6,7 @@ using Boxroom.Core;
 namespace Boxroom.Rest
 {
 
-    public interface IRestBox : IBoxroom
+    public interface IRestBox : IBox
     {
         Uri BaseAddress { get; set; }
         HttpClient HttpClient { get; set; }

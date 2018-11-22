@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Boxroom.Rest
 {
-    public abstract partial class RestBox : BoxroomBase, IRestBox
+    public abstract partial class RestBox : BoxBase, IRestBox
     {
         public override Core.MetaFields MetaFields { get; } = new MetaFields();
         public Uri BaseAddress { get; set; }

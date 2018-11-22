@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Boxroom.Core
 {
-    public abstract class BoxroomBase : IBoxroom
+    public abstract class BoxBase : IBox
     {
-        public BoxroomBase()
+        public BoxBase()
         {
             EnsureMetaFieldsShouldBeAutoMapped();
         }

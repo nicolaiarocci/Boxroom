@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Boxroom.Core
 {
-    public interface IBoxroom
+    public interface IBox
     {
         Task<T> Get<T>(string itemId);
         Task<T> Get<T>(T item);

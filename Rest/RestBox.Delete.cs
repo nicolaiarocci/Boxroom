@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Boxroom.Rest
 {
-    public abstract partial class RestBox : BoxroomBase
+    public abstract partial class RestBox : BoxBase
     {
         public override async Task Delete<T>(string itemId)
         {

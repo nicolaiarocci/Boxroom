@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 
-namespace Boxroom.Database.Mongo
+namespace Boxroom.Database
 {
     public class MongoIgnoreDefaultPropertiesConvention : IMemberMapConvention
     {

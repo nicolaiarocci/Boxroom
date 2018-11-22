@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Boxroom.Core
 {
-    public static class IBoxroomExtensions
+    public static class IBoxExtensions
     {
-        public static Task<List<T>> Find<T>(this IBoxroom box, IFindOptions<T> options = null)
+        public static Task<List<T>> Find<T>(this IBox box, IFindOptions<T> options = null)
         {
             return box.Find<T>(null, options);
         }

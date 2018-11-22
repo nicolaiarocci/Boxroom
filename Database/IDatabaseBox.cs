@@ -6,7 +6,7 @@ using Boxroom.Core;
 
 namespace Boxroom.Database
 {
-    public interface IDatabaseBox : IBoxroom
+    public interface IDatabaseBox : IBox
     {
         string ConnectionString { get; set; }
         string DataBaseName { get; set; }

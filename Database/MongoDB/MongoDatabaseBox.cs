@@ -7,7 +7,7 @@ using Boxroom.Core;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace Boxroom.Database.Mongo
+namespace Boxroom.Database
 {
     public class MongoDatabaseBox : DatabaseBox
     {
