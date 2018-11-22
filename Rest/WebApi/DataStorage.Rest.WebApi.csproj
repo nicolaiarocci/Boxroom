@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1</Version>
+    <PackageId>DataStorage.Rest.WebApi</PackageId>
+    <Authors>Nicola Iarocci</Authors>
+    <Company>CIR 2000</Company>
+    <Product>DataStorage</Product>
+    <Description>WebApi REST client for the DataStorage system.</Description>
+    <Copyright>Copyright © CIR2000 2018</Copyright>
+    <PackageProjectUrl>https://github.com/nicolaiarocci/DataStorage</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nicolaiarocci/DataStorage</RepositoryUrl>  
   </PropertyGroup>
 
   <ItemGroup>
