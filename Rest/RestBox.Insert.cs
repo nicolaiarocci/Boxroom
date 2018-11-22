@@ -6,12 +6,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
-using DataStorage.Core;
+using Boxroom.Core;
 using Newtonsoft.Json;
 
-namespace DataStorage.Rest
+namespace Boxroom.Rest
 {
-    public abstract partial class RestRepository : RepositoryBase
+    public abstract partial class RestBox : BoxroomBase
     {
         public override async Task<List<T>> Insert<T>(List<T> items)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using DataStorage.Core;
+using Boxroom.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test

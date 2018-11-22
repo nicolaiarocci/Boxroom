@@ -1,24 +1,24 @@
 ﻿using System;
-using DataStorage.Core;
+using Boxroom.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test
 {
     [TestClass]
-    public class IRepositoryExtensionsTest
+    public class IBoxroomExtensionsTest
     {
-        private Repository Repository;
+        private Boxroom Box;
 
         [TestInitialize]
         public void Setup()
         {
-            Repository = new Repository();
+            Box = new Boxroom();
         }
 
         [TestMethod]
         public void FindThrows()
         {
-            Assert.ThrowsException<NotImplementedException>(() => Repository.Find<Class>(x => x.Name == "name"));
+            Assert.ThrowsException<NotImplementedException>(() => Box.Find<Class>(x => x.Name == "name"));
         }
     }
 }

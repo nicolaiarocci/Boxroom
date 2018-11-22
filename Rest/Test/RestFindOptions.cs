@@ -1,5 +1,5 @@
 ﻿using System;
-using DataStorage.Rest;
+using Boxroom.Rest;
 using NUnit.Framework;
 
 namespace Test

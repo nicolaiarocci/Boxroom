@@ -1,10 +1,10 @@
 using System;
 using System.Linq.Expressions;
-using DataStorage.Rest;
+using Boxroom.Rest;
 
 namespace Test
 {
-    public class Repository : RestRepository
+    public class Boxroom : RestBox
     {
         public override string Render<T>(Expression<Func<T, bool>> filter)
         {

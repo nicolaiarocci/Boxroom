@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataStorage.Rest.WebApi.csproj" />
+    <ProjectReference Include="..\Boxroom.Rest.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

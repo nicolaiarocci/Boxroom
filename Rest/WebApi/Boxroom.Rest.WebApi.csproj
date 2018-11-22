@@ -4,25 +4,15 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>0.1</Version>
-    <PackageId>DataStorage.Rest</PackageId>
+    <PackageId>Boxroom.Rest.WebApi</PackageId>
     <Authors>Nicola Iarocci</Authors>
     <Company>CIR 2000</Company>
-    <Product>DataStorage</Product>
-    <Description>REST base classes and interfaces for the DataStorage system.</Description>
+    <Product>Boxroom</Product>
+    <Description>WebApi REST client for the Boxroom storage system.</Description>
     <Copyright>Copyright © CIR2000 2018</Copyright>
-    <PackageProjectUrl>https://github.com/nicolaiarocci/DataStorage</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/nicolaiarocci/DataStorage</RepositoryUrl>  
+    <PackageProjectUrl>https://github.com/nicolaiarocci/Boxroom</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nicolaiarocci/Boxroom</RepositoryUrl>  
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Core\DataStorage.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="WebApi\**" />
-    <EmbeddedResource Remove="WebApi\**" />
-    <None Remove="WebApi\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Test\**" />
@@ -32,6 +22,10 @@
 
   <ItemGroup>
     <PackageReference Include="newtonsoft.json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Boxroom.Rest.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,28 +1,28 @@
 using System;
 using System.Globalization;
-using DataStorage.Rest;
+using Boxroom.Rest;
 using NUnit.Framework;
 
 namespace Test
 {
     public class EnsureHeaderTest
     {
-        private Repository Repository;
+        private Boxroom Box;
 
         [SetUp]
         public void Setup()
         {
-            Repository = new Repository();
+            Box = new Boxroom();
         }
 
         [Test]
         public void IfModifiedSinceHeaderNotAddedWithNullArguments()
         {
-            EnsureHeader.IfModifiedSince<Class>(Repository, null);
-            Assert.IsFalse(Repository.Headers.ContainsKey("If-Modified-Since"));
+            EnsureHeader.IfModifiedSince<Class>(Box, null);
+            Assert.IsFalse(Box.Headers.ContainsKey("If-Modified-Since"));
 
-            EnsureHeader.IfModifiedSince<Class>(Repository, new RestFindOptions<Class> { IfModifiedSince = null });
-            Assert.IsFalse(Repository.Headers.ContainsKey("If-Modified-Since"));
+            EnsureHeader.IfModifiedSince<Class>(Box, new RestFindOptions<Class> { IfModifiedSince = null });
+            Assert.IsFalse(Box.Headers.ContainsKey("If-Modified-Since"));
         }
 
         [Test]
@@ -30,13 +30,13 @@ namespace Test
         {
 
             var challenge = DateTime.Now;
-            Repository.Headers = null;
+            Box.Headers = null;
 
-            EnsureHeader.IfModifiedSince<Class>(Repository, new RestFindOptions<Class> { IfModifiedSince = challenge });
+            EnsureHeader.IfModifiedSince<Class>(Box, new RestFindOptions<Class> { IfModifiedSince = challenge });
 
-            Assert.IsTrue(Repository.Headers.ContainsKey("If-Modified-Since"));
+            Assert.IsTrue(Box.Headers.ContainsKey("If-Modified-Since"));
 
-            var ifModifiedSince = DateTime.ParseExact(Repository.Headers["If-Modified-Since"],
+            var ifModifiedSince = DateTime.ParseExact(Box.Headers["If-Modified-Since"],
                 CultureInfo.CurrentCulture.DateTimeFormat.RFC1123Pattern, CultureInfo.CurrentCulture);
 
             Assert.AreEqual(challenge.ToLongDateString(), ifModifiedSince.ToLongDateString());
@@ -45,22 +45,22 @@ namespace Test
         [Test]
         public void IfNoneMatchHeaderNotAddedWithNullArguments()
         {
-            EnsureHeader.IfNoneMatch<Class>(Repository, null);
-            Assert.IsFalse(Repository.Headers.ContainsKey("If-None-Match"));
+            EnsureHeader.IfNoneMatch<Class>(Box, null);
+            Assert.IsFalse(Box.Headers.ContainsKey("If-None-Match"));
 
-            EnsureHeader.IfNoneMatch<Class>(Repository, new RestFindOptions<Class> { ETag = null });
-            Assert.IsFalse(Repository.Headers.ContainsKey("If-None-Match"));
+            EnsureHeader.IfNoneMatch<Class>(Box, new RestFindOptions<Class> { ETag = null });
+            Assert.IsFalse(Box.Headers.ContainsKey("If-None-Match"));
         }
 
         [Test]
         public void IfNoneMatchHeaderAddedWithValidArgument()
         {
 
-            Repository.Headers = null;
-            EnsureHeader.IfNoneMatch<Class>(Repository, new RestFindOptions<Class> { ETag = "etag" });
+            Box.Headers = null;
+            EnsureHeader.IfNoneMatch<Class>(Box, new RestFindOptions<Class> { ETag = "etag" });
 
-            Assert.IsTrue(Repository.Headers.ContainsKey("If-None-Match"));
-            Assert.AreEqual("etag", Repository.Headers["If-None-Match"]);
+            Assert.IsTrue(Box.Headers.ContainsKey("If-None-Match"));
+            Assert.AreEqual("etag", Box.Headers["If-None-Match"]);
         }
     }
 }

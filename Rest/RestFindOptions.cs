@@ -1,7 +1,7 @@
 ﻿using System;
-using DataStorage.Core;
+using Boxroom.Core;
 
-namespace DataStorage.Rest
+namespace Boxroom.Rest
 {
     public class RestFindOptions<T> : FindOptions<T>
     {

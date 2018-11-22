@@ -1,6 +1,6 @@
 using System;
 
-namespace DataStorage.Core
+namespace Boxroom.Core
 {
     public interface IFindOptions<T>
     {

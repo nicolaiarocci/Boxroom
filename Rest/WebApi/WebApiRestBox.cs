@@ -6,12 +6,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
-using DataStorage.Core;
+using Boxroom.Core;
 using Newtonsoft.Json;
 
-namespace DataStorage.Rest
+namespace Boxroom.Rest
 {
-    public class WebApiRestRepository : RestRepository
+    public class WebApiRestBox : RestBox
 
     {
         public override string Render<T>(Expression<Func<T, bool>> filter)

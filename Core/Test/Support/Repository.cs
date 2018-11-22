@@ -1,9 +1,9 @@
 using System;
-using DataStorage.Core;
+using Boxroom.Core;
 
 namespace Test
 {
-    public class Repository : RepositoryBase
+    public class Boxroom : BoxroomBase
     {
         public override void ValidateProperties()
         {

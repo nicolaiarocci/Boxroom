@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace DataStorage.Core
+namespace Boxroom.Core
 {
     public class MetaFields
     {

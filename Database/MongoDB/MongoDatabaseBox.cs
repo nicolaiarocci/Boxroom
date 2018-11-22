@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using DataStorage.Core;
+using Boxroom.Core;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace DataStorage.Database.MongoDB
+namespace Boxroom.Database.Mongo
 {
-    public class MongoDBDatabaseRepository : DatabaseRepositoryBase
+    public class MongoDatabaseBox : DatabaseBox
     {
         public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, IFindOptions<T> options = null)
         {

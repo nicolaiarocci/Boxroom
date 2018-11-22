@@ -4,48 +4,48 @@ using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using DataStorage.Rest;
+using Boxroom.Rest;
 using NUnit.Framework;
 using RichardSzalay.MockHttp;
 
 namespace Test
 {
-    public class RestRepositoryTestInsert : RestRepositoryTestBase
+    public class RestBoxTestInsert : RestBoxTestBase
     {
 
         [Test]
         public void InsertThrowsWhenItemIsNullOrEmpty()
         {
-            var nullException = Assert.ThrowsAsync<ArgumentNullException>(async() => await Repository.Insert<Class>(items: null));
+            var nullException = Assert.ThrowsAsync<ArgumentNullException>(async() => await Box.Insert<Class>(items: null));
             Assert.AreEqual("items", nullException.ParamName);
 
-            var argumentException = Assert.ThrowsAsync<ArgumentException>(async() => await Repository.Insert<Class>(items: new List<Class>()));
+            var argumentException = Assert.ThrowsAsync<ArgumentException>(async() => await Box.Insert<Class>(items: new List<Class>()));
             Assert.AreEqual("items", argumentException.ParamName);
         }
 
         [Test]
-        public void InsertRepositoryPropertiesAreValidated()
+        public void InsertPropertiesAreValidated()
         {
-            RepositoryPropertiesAreValidated(async() => await Repository.Insert<Class>(new List<Class> { { new Class { Name = "name" } } }));
+            PropertiesAreValidated(async() => await Box.Insert<Class>(new List<Class> { { new Class { Name = "name" } } }));
         }
 
         [Test]
         public async Task InsertSuccess()
         {
-            Repository.BaseAddress = new Uri("https://testme.com");
-            Repository.DataSources = new Dictionary<Type, string>
+            Box.BaseAddress = new Uri("https://testme.com");
+            Box.DataSources = new Dictionary<Type, string>
             { { typeof(Class), "endpoint" }
             };
-            Repository.Headers.Add("Test", "Value");
-            Repository.HttpClient = new HttpClient(GetMock<Class>(Repository));
+            Box.Headers.Add("Test", "Value");
+            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
             var items = new List<Class>
             { { new Class { Name = "Item1" } },
                 { new Class { Name = "Item2" } },
             };
-            var returnedItems = await Repository.Insert<Class>(items);
+            var returnedItems = await Box.Insert<Class>(items);
 
-            Assert.AreEqual(HttpStatusCode.Created, Repository.Response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.Created, Box.Response.StatusCode);
             Assert.AreEqual(2, returnedItems.Count);
             Assert.AreEqual("99", returnedItems[0].Id);
             Assert.AreEqual("100", returnedItems[1].Id);
@@ -54,27 +54,27 @@ namespace Test
         [Test]
         public async Task InsertFailure()
         {
-            Repository.BaseAddress = new Uri("https://testme.com");
-            Repository.DataSources = new Dictionary<Type, string>
+            Box.BaseAddress = new Uri("https://testme.com");
+            Box.DataSources = new Dictionary<Type, string>
             { { typeof(Class), "endpoint" }
             };
-            Repository.Headers.Add("Test", "Value");
+            Box.Headers.Add("Test", "Value");
 
-            Repository.HttpClient = new HttpClient(GetMock<Class>(Repository));
+            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
             var items = new List<Class>
             { { new Class { Name = "Item1" } },
                 { new Class { Name = "Item2" } },
             };
 
-            Repository.BaseAddress = new Uri("https://failme.com");
+            Box.BaseAddress = new Uri("https://failme.com");
 
-            var returnedItems = await Repository.Insert<Class>(items);
+            var returnedItems = await Box.Insert<Class>(items);
 
-            Assert.AreEqual(HttpStatusCode.NotFound, Repository.Response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, Box.Response.StatusCode);
             Assert.IsNull(returnedItems);
         }
-        protected override MockHttpMessageHandler GetMock<T>(Repository client)
+        protected override MockHttpMessageHandler GetMock<T>(Boxroom client)
         {
             var mockHttp = new MockHttpMessageHandler();
 

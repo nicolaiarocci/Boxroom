@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DataStorage.Core;
+using Boxroom.Core;
 
-namespace DataStorage.Database
+namespace Boxroom.Database
 {
-    public abstract class DatabaseRepositoryBase : RepositoryBase, IDatabaseRepository
+    public abstract class DatabaseBox : BoxroomBase, IDatabaseBox
     {
         public string ConnectionString { get; set; }
         public string DataBaseName { get; set; }

@@ -5,11 +5,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace DataStorage.Core
+namespace Boxroom.Core
 {
-    public abstract class RepositoryBase : IRepository
+    public abstract class BoxroomBase : IBoxroom
     {
-        public RepositoryBase()
+        public BoxroomBase()
         {
             EnsureMetaFieldsShouldBeAutoMapped();
         }

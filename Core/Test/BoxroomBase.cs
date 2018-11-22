@@ -1,36 +1,36 @@
 using System;
 using System.Collections.Generic;
-using DataStorage.Core;
+using Boxroom.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test
 {
     [TestClass]
-    public class RepositoryBaseTest
+    public class BoxroomBaseTest
     {
-        private Repository Repository;
+        private Boxroom Box;
         [TestInitialize]
         public void Setup()
         {
-            Repository = new Repository();
+            Box = new Boxroom();
         }
 
         [TestMethod]
         public void MetaFieldsAreSetAtStartup()
         {
-            Assert.IsNotNull(Repository.MetaFields);
+            Assert.IsNotNull(Box.MetaFields);
         }
 
         [TestMethod]
         public void DataSourcesIsNull()
         {
-            Assert.IsNull(Repository.DataSources);
+            Assert.IsNull(Box.DataSources);
         }
 
         [TestMethod]
         public void MetaFieldsShouldBeAutoMappedByDefaut()
         {
-            foreach (var metaField in Repository.MetaFields.AsList())
+            foreach (var metaField in Box.MetaFields.AsList())
             {
                 Assert.IsTrue(ClassMap.ShouldAutoMapMembers.Contains(metaField));
             }
@@ -39,55 +39,55 @@ namespace Test
         [TestMethod]
         public void DeleteItemThrows()
         {
-            Assert.ThrowsException<NotImplementedException>(() => Repository.Delete(new Class()));
+            Assert.ThrowsException<NotImplementedException>(() => Box.Delete(new Class()));
         }
 
         [TestMethod]
         public void DeleteItemIdThrows()
         {
-            Assert.ThrowsException<NotImplementedException>(() => Repository.Delete("id"));
+            Assert.ThrowsException<NotImplementedException>(() => Box.Delete("id"));
         }
 
         [TestMethod]
         public void DeleteFilterThrows()
         {
-            Assert.ThrowsException<NotImplementedException>(() => Repository.Delete<Class>(x => x.Id == "Id"));
+            Assert.ThrowsException<NotImplementedException>(() => Box.Delete<Class>(x => x.Id == "Id"));
         }
 
         [TestMethod]
         public void GetItemThrows()
         {
-            Assert.ThrowsException<NotImplementedException>(() => Repository.Get(new Class()));
+            Assert.ThrowsException<NotImplementedException>(() => Box.Get(new Class()));
         }
 
         [TestMethod]
         public void GetItemIdThrows()
         {
-            Assert.ThrowsException<NotImplementedException>(() => Repository.Get("id"));
+            Assert.ThrowsException<NotImplementedException>(() => Box.Get("id"));
         }
 
         [TestMethod]
         public void FindFilterThrows()
         {
-            Assert.ThrowsException<NotImplementedException>(() => Repository.Find<Class>(x => x.Name == "name"));
+            Assert.ThrowsException<NotImplementedException>(() => Box.Find<Class>(x => x.Name == "name"));
         }
 
         [TestMethod]
         public void InsertItemThrows()
         {
-            Assert.ThrowsException<NotImplementedException>(() => Repository.Insert(new Class()));
+            Assert.ThrowsException<NotImplementedException>(() => Box.Insert(new Class()));
         }
 
         [TestMethod]
         public void InsertItemsThrows()
         {
-            Assert.ThrowsException<NotImplementedException>(() => Repository.Insert(new List<Class> { new Class() }));
+            Assert.ThrowsException<NotImplementedException>(() => Box.Insert(new List<Class> { new Class() }));
         }
 
         [TestMethod]
         public void ReplaceThrows()
         {
-            Assert.ThrowsException<NotImplementedException>(() => Repository.Replace(new Class()));
+            Assert.ThrowsException<NotImplementedException>(() => Box.Replace(new Class()));
         }
     }
 }

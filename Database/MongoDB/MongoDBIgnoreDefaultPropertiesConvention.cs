@@ -1,9 +1,9 @@
 ﻿using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 
-namespace DataStorage.Database.MongoDB
+namespace Boxroom.Database.Mongo
 {
-    public class MongoDBIgnoreDefaultPropertiesConvention : IMemberMapConvention
+    public class MongoIgnoreDefaultPropertiesConvention : IMemberMapConvention
     {
         public string Name => $"Ignore Default Properties";
 

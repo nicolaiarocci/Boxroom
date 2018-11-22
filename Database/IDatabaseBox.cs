@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DataStorage.Core;
+using Boxroom.Core;
 
-namespace DataStorage.Database
+namespace Boxroom.Database
 {
-    public interface IDatabaseRepository : IRepository
+    public interface IDatabaseBox : IBoxroom
     {
         string ConnectionString { get; set; }
         string DataBaseName { get; set; }

@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace DataStorage.Core
+namespace Boxroom.Core
 {
-    public interface IRepository
+    public interface IBoxroom
     {
         Task<T> Get<T>(string itemId);
         Task<T> Get<T>(T item);

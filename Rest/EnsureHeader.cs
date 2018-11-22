@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using DataStorage.Core;
+using Boxroom.Core;
 
-namespace DataStorage.Rest
+namespace Boxroom.Rest
 {
     public static class EnsureHeader
     {
-        public static void IfModifiedSince<T>(this IRestRepository repository, IFindOptions<T> options)
+        public static void IfModifiedSince<T>(this IRestBox box, IFindOptions<T> options)
         {
             if (options == null)
             {
@@ -15,11 +15,11 @@ namespace DataStorage.Rest
             {
                 return;
             }
-            EnsureHeaders(repository);
+            EnsureHeaders(box);
 
-            repository.Headers.Add("If-Modified-Since", options.IfModifiedSince.Value.ToString("r"));
+            box.Headers.Add("If-Modified-Since", options.IfModifiedSince.Value.ToString("r"));
         }
-        public static void IfNoneMatch<T>(this IRestRepository repository, RestFindOptions<T> options)
+        public static void IfNoneMatch<T>(this IRestBox box, RestFindOptions<T> options)
         {
             if (options == null)
             {
@@ -29,15 +29,15 @@ namespace DataStorage.Rest
             {
                 return;
             }
-            EnsureHeaders(repository);
+            EnsureHeaders(box);
 
-            repository.Headers.Add("If-None-Match", options.ETag);
+            box.Headers.Add("If-None-Match", options.ETag);
         }
-        private static void EnsureHeaders(this IRestRepository repository)
+        private static void EnsureHeaders(this IRestBox box)
         {
-            if (repository.Headers == null)
+            if (box.Headers == null)
             {
-                repository.Headers = new Dictionary<string, string>();
+                box.Headers = new Dictionary<string, string>();
             }
         }
     }

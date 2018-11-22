@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataStorage.Rest.csproj" />
+    <ProjectReference Include="..\Boxroom.Rest.csproj" />
   </ItemGroup>
 
 </Project>

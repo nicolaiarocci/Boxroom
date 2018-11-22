@@ -4,14 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>0.1</Version>
-    <PackageId>DataStorage.Core</PackageId>
+    <PackageId>Boxroom.Core</PackageId>
     <Authors>Nicola Iarocci</Authors>
     <Company>CIR 2000</Company>
-    <Product>DataStorage</Product>
-    <Description>Core classes and interfaces for the DataStorage system.</Description>
+    <Product>Boxroom</Product>
+    <Description>Core classes and interfaces for the Boxroom storage system.</Description>
     <Copyright>Copyright © CIR2000 2018</Copyright>
-    <PackageProjectUrl>https://github.com/nicolaiarocci/DataStorage</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/nicolaiarocci/DataStorage</RepositoryUrl>  
+    <PackageProjectUrl>https://github.com/nicolaiarocci/Boxroom</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nicolaiarocci/Boxroom</RepositoryUrl>  
   </PropertyGroup>
 
   <ItemGroup>

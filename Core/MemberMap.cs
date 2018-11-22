@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace DataStorage.Core
+namespace Boxroom.Core
 {
     public class MemberMap
     {
@@ -43,11 +43,11 @@ namespace DataStorage.Core
 
             if (memberInfo is FieldInfo)
             {
-                return ((FieldInfo)memberInfo).FieldType;
+                return ((FieldInfo) memberInfo).FieldType;
             }
             else if (memberInfo is PropertyInfo)
             {
-                return ((PropertyInfo)memberInfo).PropertyType;
+                return ((PropertyInfo) memberInfo).PropertyType;
             }
 
             throw new NotSupportedException("Only field and properties are supported at this time.");

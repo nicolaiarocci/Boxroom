@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using DataStorage.Core;
+using Boxroom.Core;
 
-namespace DataStorage.Rest
+namespace Boxroom.Rest
 {
 
-    public interface IRestRepository : IRepository
+    public interface IRestBox : IBoxroom
     {
         Uri BaseAddress { get; set; }
         HttpClient HttpClient { get; set; }

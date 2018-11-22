@@ -1,18 +1,22 @@
-﻿# DataStorage 
+﻿# Boxroom Storage System
 
 ## CRUD for Humans
 
-The DataStorage project aims to allow the performing of CRUD operations
-against **any** storage system: REST services, databases, etc., using a
-standard, simple interface.
+The Boxroom experiment aims to allow for asynchronous CRUD operations on POCO
+objects to be executable against **any** kind of backend storage system, no
+matter the underlying technology, with a uniform yet simple interface.
+
+REST services and NoSQL/SQL databases are the current main targets.
 
 All projects conform to NetStandard 2.0 and are currently under heavy
 development. They are probably not ready for production use.
 
-Existing, concrete implementations:
+Boxes (drivers) provide concrete interface implementations, such as:
 
-- A MongoDB driver: `MongoDBDatabaseRepository`
-- A WebApi REST client: `WebApiRestRepository`
+- MongoDB: `MongoDatabaseBox`
+- WebApi: `WebApiRestBox`
+
+Both of the above boxes are currently in development.
 
 ## Documentation
 
@@ -20,6 +24,6 @@ Documentation is still missing.
 
 ## License
 
-DataStorage is a [Nicola Iarocci](https://nicolaiarocci.com) open source
+Boxroom is a [Nicola Iarocci](https://nicolaiarocci.com) open source
 project, distributed under the
-[MIT](https://raw.githubusercontent.com/nicolaiarocci/DataStorage/master/LICENSE)`license.
+[MIT](https://raw.githubusercontent.com/nicolaiarocci/Boxroom/master/LICENSE)`license.
