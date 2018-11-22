@@ -1,12 +1,25 @@
-﻿# DataStorage
+﻿# DataStorage 
 
-CRUD for Humans.
+## CRUD for Humans
 
-The DataStorage system allows to perform Create, Read, Update, Delete operations against REST services *and* databases in a simple, standard way.
+The DataStorage project aims to allow the performing of CRUD operations
+against **any** storage system: REST services, databases, etc., using a
+standard, simple interface.
 
-- NetStandard 2.0
+All projects conform to NetStandard 2.0 and are currently under heavy
+development. They are probably not ready for production use.
 
-## Copyright e licenza
+Existing, concrete implementations:
 
-- Author: [Nicola Iarocci](https://nicolaiarocci.com)
-- License: [MIT](#)
+- A MongoDB driver: `MongoDBDatabaseRepository`
+- A WebApi REST client: `WebApiRestRepository`
+
+## Documentation
+
+Documentation is still missing.
+
+## License
+
+DataStorage is a [Nicola Iarocci](https://nicolaiarocci.com) open source
+project, distributed under the
+[MIT](https://raw.githubusercontent.com/nicolaiarocci/DataStorage/master/LICENSE)`license.
