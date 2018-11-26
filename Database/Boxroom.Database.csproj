@@ -15,6 +15,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1</Version>
+    <PackageId>Boxroom.Database</PackageId>
+    <Authors>Nicola Iarocci</Authors>
+    <Company>CIR 2000</Company>
+    <Product>Boxroom</Product>
+    <Description>Database classes and interfaces for the Boxroom storage system.</Description>
+    <Copyright>Copyright © CIR2000 2018</Copyright>
+    <PackageProjectUrl>https://github.com/nicolaiarocci/Boxroom</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nicolaiarocci/Boxroom</RepositoryUrl>  
   </PropertyGroup>
 
 </Project>
