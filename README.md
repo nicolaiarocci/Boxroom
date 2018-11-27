@@ -22,7 +22,11 @@ SQL or NoSQL) are primary targets.
 
         // Lookups also work alike, no matter where and how data is stored.
         var brooklynCustomers = await database.Find<Customer>(c => c.Zip == "11201");
-        var invoices = await remote.Find<Invoice>(inv => inv.Date >= DateTime.Now.AddDays(-10), new FindOptions<Invoice> { IfModifiedSince = DateTime.Now.Date });
+
+        var invoices = await remote.Find<Invoice>(
+            inv => inv.Date >= DateTime.Now.AddDays(-10),
+            new FindOptions<Invoice> { IfModifiedSince = DateTime.Now.Date }
+            );
 
         Console.WriteLine($"We got back {brooklynCustomers.Count} customers and {invoices.Count} invoices");
     }
