@@ -21,16 +21,16 @@ namespace Test
 
         protected void PropertiesAreValidated(Func<Task> operation)
         {
-            var nullException = Assert.ThrowsAsync<ArgumentNullException>(async() => await operation());
+            var nullException = Assert.ThrowsAsync<ArgumentNullException>(async () => await operation());
             Assert.AreEqual(nameof(Box.BaseAddress), nullException.ParamName);
 
             Box.BaseAddress = new Uri("https://test.com");
 
-            nullException = Assert.ThrowsAsync<ArgumentNullException>(async() => await operation());
+            nullException = Assert.ThrowsAsync<ArgumentNullException>(async () => await operation());
             Assert.AreEqual(nameof(Box.DataSources), nullException.ParamName);
 
             Box.DataSources = new Dictionary<Type, string>();
-            var argumentException = Assert.ThrowsAsync<ArgumentException>(async() => await operation());
+            var argumentException = Assert.ThrowsAsync<ArgumentException>(async () => await operation());
             Assert.AreEqual(nameof(Box.DataSources), argumentException.ParamName);
         }
 

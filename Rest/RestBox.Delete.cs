@@ -29,7 +29,7 @@ namespace Boxroom.Rest
             var client = PreparedClient();
 
             // TODO: more robust url building
-            Response = await client.DeleteAsync($"{BaseAddress.ToString()}{DataSources[typeof(T)]}/{itemId}");
+            Response = await client.DeleteAsync($"{TargetEndpointNormalized<T>().ToString()}/{itemId}");
         }
     }
 }

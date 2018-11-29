@@ -16,21 +16,21 @@ namespace Test
         [Test]
         public void ReplaceThrowsWhenItemIsNull()
         {
-            var nullException = Assert.ThrowsAsync<ArgumentNullException>(async() => await Box.Replace<Class>(item: null));
+            var nullException = Assert.ThrowsAsync<ArgumentNullException>(async () => await Box.Replace<Class>(item: null));
             Assert.AreEqual("item", nullException.ParamName);
         }
 
         [Test]
         public void ReplacePropertiesAreValidated()
         {
-            PropertiesAreValidated(async() => await Box.Replace<Class>(new Class { Name = "name" }));
+            PropertiesAreValidated(async () => await Box.Replace<Class>(new Class { Name = "name" }));
         }
 
         [Test]
         public async Task ReplaceSuccess()
         {
             Box.BaseAddress = new Uri("https://testme.com");
-            Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint" } };
+            Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint/" } };
             Box.Headers.Add("Test", "Value");
             Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
@@ -59,7 +59,7 @@ namespace Test
         {
             var mockHttp = new MockHttpMessageHandler();
 
-            mockHttp.When($"{client.BaseAddress.ToString()}{client.DataSources[typeof(T)]}/id")
+            mockHttp.When($"https://testme.com/endpoint/id")
                 .WithHeaders("Test", "Value")
                 .Respond(HttpStatusCode.OK,
                     "application/json", @"

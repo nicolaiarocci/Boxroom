@@ -24,8 +24,7 @@ namespace Boxroom.Rest
 
             var client = PreparedClient();
 
-            // TODO: more robust url building
-            Response = await client.GetAsync($"{BaseAddress.ToString()}{DataSources[typeof(T)]}{(query == null ? "" : query)}");
+            Response = await client.GetAsync($"{TargetEndpointNormalized<T>().ToString()}{(query == null ? "" : query)}");
             if (Response.StatusCode != HttpStatusCode.OK) return null;
 
             var json = await Response.Content.ReadAsStringAsync();

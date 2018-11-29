@@ -32,7 +32,7 @@ namespace Boxroom.Rest
 
             var content = new StringContent(JsonConvert.SerializeObject(item));
 
-            Response = await client.PutAsync($"{BaseAddress.ToString()}{DataSources[typeof(T)]}/{idMemberValue.ToString()}", content);
+            Response = await client.PutAsync($"{TargetEndpointNormalized<T>().ToString()}/{idMemberValue.ToString()}", content);
             if (Response.StatusCode != HttpStatusCode.OK) return default(T);
 
             var json = await Response.Content.ReadAsStringAsync();

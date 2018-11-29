@@ -29,7 +29,7 @@ namespace Boxroom.Rest
             var client = PreparedClient();
 
             var content = new StringContent(JsonConvert.SerializeObject(items));
-            Response = await client.PostAsync($"{BaseAddress.ToString()}{DataSources[typeof(T)]}", content);
+            Response = await client.PostAsync($"{TargetEndpointNormalized<T>().ToString()}", content);
             if (Response.StatusCode != HttpStatusCode.Created) return null;
 
             var json = await Response.Content.ReadAsStringAsync();

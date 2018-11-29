@@ -52,5 +52,9 @@ namespace Boxroom.Rest
                 throw new ArgumentException($"{nameof(DataSources)} cannot be empty", nameof(DataSources));
             }
         }
+        public Uri TargetEndpointNormalized<T>()
+        {
+            return new Uri(BaseAddress, DataSources[typeof(T)].TrimStart('/').TrimEnd('/'));
+        }
     }
 }
