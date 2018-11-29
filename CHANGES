@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Rest v0.2
+=========
+
+Released on November 29, 2018.
+
+- Fix: robust Uri handling.
+
 Core, Rest, WebApi v0.1
 =======================
  
