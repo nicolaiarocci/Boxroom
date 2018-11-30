@@ -4,6 +4,11 @@ Changelog
 In Development
 ==============
 
+Rest v0.3
+=========
+
+Released on November 30, 2018
+
 - Fix: RestBox.Insert and Replace don't att Content-Type header.
 
 Core, Rest, WebApi v0.2

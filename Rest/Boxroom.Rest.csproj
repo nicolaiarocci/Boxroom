@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.2</Version>
+    <Version>0.3</Version>
     <PackageId>Boxroom.Rest</PackageId>
     <Authors>Nicola Iarocci</Authors>
     <Company>CIR 2000</Company>
