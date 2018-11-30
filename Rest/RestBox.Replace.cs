@@ -31,6 +31,7 @@ namespace Boxroom.Rest
             var client = PreparedClient();
 
             var content = new StringContent(JsonConvert.SerializeObject(item));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             Response = await client.PutAsync($"{TargetEndpointNormalized<T>().ToString()}/{idMemberValue.ToString()}", content);
             if (Response.StatusCode != HttpStatusCode.OK) return default(T);

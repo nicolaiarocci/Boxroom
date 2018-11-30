@@ -61,6 +61,7 @@ namespace Test
 
             mockHttp.When($"https://testme.com/endpoint/id")
                 .WithHeaders("Test", "Value")
+                .WithHeaders("Content-Type", "application/json")
                 .Respond(HttpStatusCode.OK,
                     "application/json", @"
                         { 'Id' : 'id', 'Name': 'Item1', }");

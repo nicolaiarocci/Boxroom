@@ -16,17 +16,17 @@ namespace Test
         [Test]
         public void InsertThrowsWhenItemIsNullOrEmpty()
         {
-            var nullException = Assert.ThrowsAsync<ArgumentNullException>(async() => await Box.Insert<Class>(items: null));
+            var nullException = Assert.ThrowsAsync<ArgumentNullException>(async () => await Box.Insert<Class>(items: null));
             Assert.AreEqual("items", nullException.ParamName);
 
-            var argumentException = Assert.ThrowsAsync<ArgumentException>(async() => await Box.Insert<Class>(items: new List<Class>()));
+            var argumentException = Assert.ThrowsAsync<ArgumentException>(async () => await Box.Insert<Class>(items: new List<Class>()));
             Assert.AreEqual("items", argumentException.ParamName);
         }
 
         [Test]
         public void InsertPropertiesAreValidated()
         {
-            PropertiesAreValidated(async() => await Box.Insert<Class>(new List<Class> { { new Class { Name = "name" } } }));
+            PropertiesAreValidated(async () => await Box.Insert<Class>(new List<Class> { { new Class { Name = "name" } } }));
         }
 
         [Test]
@@ -80,6 +80,7 @@ namespace Test
 
             mockHttp.When($"{client.BaseAddress.ToString()}{client.DataSources[typeof(T)]}")
                 .WithHeaders("Test", "Value")
+                .WithHeaders("Content-Type", "application/json")
                 .Respond(HttpStatusCode.Created,
                     "application/json", @"[
                         { 'Id' : '99', 'Name': 'Item1', },

@@ -1,6 +1,11 @@
 Changelog
 =========
 
+In Development
+==============
+
+- Fix: RestBox.Insert and Replace don't att Content-Type header.
+
 Core, Rest, WebApi v0.2
 =======================
 
