@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace Boxroom.Database
 {
-    public class MongoDatabaseBox : DatabaseBox
+    public class MongoBox : DatabaseBox
     {
         public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, IFindOptions<T> options = null)
         {

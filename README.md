@@ -73,7 +73,7 @@ ready for production use.
 
 Boxes (drivers, or clients) provide concrete interface implementations:
 
-- `MongoDatabaseBox` a MongoDB box;
+- `MongoBox` a MongoDB box;
 - `RedisBox` a MongoDB box;
 - `WebApiRestBox` a WebApi box;
 

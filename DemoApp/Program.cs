@@ -37,7 +37,7 @@ namespace DemoApp
         }
         static IDatabaseBox MongoBox()
         {
-            return new MongoDatabaseBox()
+            return new MongoBox()
             {
                 ConnectionString = "mongodb://localhost:27017/my_database",
                 // In the context of database boxes, DataSources maps types to tables/collections.
