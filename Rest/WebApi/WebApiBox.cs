@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Boxroom.Rest
 {
-    public class WebApiRestBox : RestBox
+    public class WebApiBox : RestBox
 
     {
         public override string Render<T>(Expression<Func<T, bool>> filter)

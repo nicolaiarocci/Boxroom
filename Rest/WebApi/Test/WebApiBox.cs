@@ -9,14 +9,14 @@ namespace Test
         [Test]
         public void RenderReturnsNullWhenFilterIsNull()
         {
-            var box = new WebApiRestBox();
+            var box = new WebApiBox();
             Assert.IsNull(box.Render<Class>(null));
         }
 
         [Test]
         public void RenderThrowsNotImplmented()
         {
-            var box = new WebApiRestBox();
+            var box = new WebApiBox();
             Assert.Throws<NotImplementedException>(() => box.Render<Class>(x => x.Name == "a name"));
         }
     }
