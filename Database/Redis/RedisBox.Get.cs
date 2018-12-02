@@ -16,7 +16,7 @@ namespace Boxroom.Database
             ValidateProperties();
 
             EnsureConnection();
-            var db = redis.GetDatabase(GetDatabaseIndex());
+            var db = Multiplexer.GetDatabase(GetDatabaseIndex());
             var result = await db.StringGetAsync(itemId);
             if (!result.HasValue)
             {

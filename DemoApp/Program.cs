@@ -49,7 +49,7 @@ namespace DemoApp
         }
         static IRestBox WebApiBox()
         {
-            return new WebApiRestBox()
+            return new WebApiBox()
             {
                 BaseAddress = new Uri("https://myservice.com"),
                 // In the context of rest boxes, DataSources maps types to endpoints.

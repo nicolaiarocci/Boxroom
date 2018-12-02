@@ -37,7 +37,7 @@ namespace Tests
                 .Setup(_ => _.GetDatabase(It.IsAny<int>(), It.IsAny<object>()))
                 .Returns(db.Object);
 
-            box = new RedisBox(redis.Object);
+            box = new RedisBox() { Multiplexer = redis.Object };
             box.MetaFields.Id = "ApiKey";
         }
         [Test]

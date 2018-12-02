@@ -33,7 +33,7 @@ SQL or NoSQL) are primary targets.
 
     static IDatabaseBox MongoBox()
     {
-        return new MongoDatabaseBox()
+        return new MongoBox()
         {
             ConnectionString = "mongodb://localhost:27017/my_database",
             // In the context of database boxes, DataSources maps types to tables/collections.
@@ -45,7 +45,7 @@ SQL or NoSQL) are primary targets.
     }
     static IRestBox WebApiBox()
     {
-        return new WebApiRestBox()
+        return new WebApiBox()
         {
             BaseAddress = new Uri("https://myservice.com"),
             // In the context of rest boxes, DataSources maps types to endpoints.

@@ -11,7 +11,7 @@ namespace Boxroom.Database
             ValidateProperties();
 
             EnsureConnection();
-            var db = redis.GetDatabase(GetDatabaseIndex());
+            var db = Multiplexer.GetDatabase(GetDatabaseIndex());
 
             var success = await Insert(item, db, expiry, When.Exists);
 

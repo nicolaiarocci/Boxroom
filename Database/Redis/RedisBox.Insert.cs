@@ -20,7 +20,7 @@ namespace Boxroom.Database
             ValidateProperties();
 
             EnsureConnection();
-            var db = redis.GetDatabase(GetDatabaseIndex());
+            var db = Multiplexer.GetDatabase(GetDatabaseIndex());
 
             await Insert(item, db, expiry, when: When.Always);
 
@@ -35,7 +35,7 @@ namespace Boxroom.Database
             ValidateProperties();
 
             EnsureConnection();
-            var db = redis.GetDatabase(GetDatabaseIndex());
+            var db = Multiplexer.GetDatabase(GetDatabaseIndex());
             foreach (var item in items)
             {
                 await Insert(item, db, expiry, When.Always);

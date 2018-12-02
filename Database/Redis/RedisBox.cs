@@ -6,14 +6,11 @@ namespace Boxroom.Database
 {
     public partial class RedisBox : DatabaseBox, IRedisBox
     {
-        private IConnectionMultiplexer redis;
+        public IConnectionMultiplexer Multiplexer { get; set; }
+
         public RedisBox()
         {
             ConnectionString = "localhost";
-        }
-        public RedisBox(IConnectionMultiplexer multiplexer) : this()
-        {
-            redis = multiplexer;
         }
         public override void ValidateProperties()
         {
@@ -35,9 +32,9 @@ namespace Boxroom.Database
         }
         private void EnsureConnection()
         {
-            if (redis == null)
+            if (Multiplexer == null)
             {
-                redis = ConnectionMultiplexer.Connect(ConnectionString);
+                Multiplexer = ConnectionMultiplexer.Connect(ConnectionString);
             }
         }
     }

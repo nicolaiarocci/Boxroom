@@ -16,7 +16,7 @@ namespace Boxroom.Database
             ValidateProperties();
 
             EnsureConnection();
-            var db = redis.GetDatabase(GetDatabaseIndex());
+            var db = Multiplexer.GetDatabase(GetDatabaseIndex());
             await db.KeyDeleteAsync(itemId);
         }
         public override async Task Delete<T>(T item)
@@ -24,7 +24,7 @@ namespace Boxroom.Database
             ValidateProperties();
 
             EnsureConnection();
-            var db = redis.GetDatabase(GetDatabaseIndex());
+            var db = Multiplexer.GetDatabase(GetDatabaseIndex());
             var key = item.GetType().GetProperty(MetaFields.Id).GetValue(item).ToString();
             await db.KeyDeleteAsync(key);
         }
