@@ -62,18 +62,20 @@ Available projects:
 - `Boxroom.Core`: core classes and interfaces
 - `Boxroom.Database`: Database base classes and inerfaces
 - `Boxroom.Database.MongoDB`: Mongo client
+- `Boxroom.Database.RedisBox`: Redis client
 - `Boxroom.Rest`: REST base classes and interfaces
 - `Boxroom.Rest.WebApi`: WebApi REST client
 
 At this time all projects reside together but are likely to be split into
 separate repositories when they are mature enough. They all conform to
-NetStandard 2.0 and are under development. They are probably not ready for
-production use.
+NetStandard 2.0, and are under active development. They are probably not
+ready for production use.
 
 Boxes (drivers, or clients) provide concrete interface implementations:
 
-- `MongoDatabaseBox` is a Mongo client;
-- `WebApiRestBox` is a WebApi client;
+- `MongoDatabaseBox` a MongoDB box;
+- `RedisBox` a MongoDB box;
+- `WebApiRestBox` a WebApi box;
 
 Both are in active development.
 

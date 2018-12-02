@@ -6,11 +6,13 @@
 
   <ItemGroup>
     <Compile Remove="MongoDB\**" />
-    <Compile Remove="MongoDB\**" />
-    <EmbeddedResource Remove="MongoDB\**" />
     <EmbeddedResource Remove="MongoDB\**" />
     <None Remove="MongoDB\**" />
-    <None Remove="MongoDB\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Redis\**" />
+    <EmbeddedResource Remove="Redis\**" />
+    <None Remove="Redis\**" />
   </ItemGroup>
 
   <PropertyGroup>
