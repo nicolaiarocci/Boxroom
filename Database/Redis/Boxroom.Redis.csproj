@@ -1,5 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1</Version>
+    <PackageId>Boxroom.Database.Redis</PackageId>
+    <Authors>Nicola Iarocci</Authors>
+    <Company>CIR 2000</Company>
+    <Product>Boxroom</Product>
+    <Description>Redis client (box) for the Boxroom storage system.</Description>
+    <Copyright>Copyright © CIR2000 2018</Copyright>
+    <PackageProjectUrl>https://github.com/nicolaiarocci/Boxroom</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nicolaiarocci/Boxroom</RepositoryUrl>  
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Boxroom.Database.csproj" />
   </ItemGroup>
@@ -14,9 +28,5 @@
     <EmbeddedResource Remove="Test\**" />
     <None Remove="Test\**" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
 
 </Project>
