@@ -25,7 +25,7 @@ namespace Boxroom.Database
 
             EnsureConnection();
             var db = Multiplexer.GetDatabase(GetDatabaseIndex());
-            var key = item.GetType().GetProperty(MetaFields.Id).GetValue(item).ToString();
+            var key = typeof(T).GetType().GetProperty(MetaFields.Id).GetValue(item).ToString();
             await db.KeyDeleteAsync(key);
         }
     }

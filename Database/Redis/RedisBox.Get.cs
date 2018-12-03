@@ -26,7 +26,7 @@ namespace Boxroom.Database
         }
         public override async Task<T> Get<T>(T item)
         {
-            var key = item.GetType().GetProperty(MetaFields.Id).GetValue(item).ToString();
+            var key = typeof(T).GetProperty(MetaFields.Id).GetValue(item).ToString();
             return await Get<T>(key);
         }
     }

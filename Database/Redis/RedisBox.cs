@@ -22,7 +22,10 @@ namespace Boxroom.Database
         }
         private int GetDatabaseIndex()
         {
-            if (DataBaseName == null) return 0;
+            if (DataBaseName == null)
+            {
+                return 0;
+            }
             if (!int.TryParse(DataBaseName, out int index))
             {
                 // TODO: localized explanation: redis needs numeric db indexes
@@ -30,7 +33,7 @@ namespace Boxroom.Database
             }
             return index;
         }
-        private void EnsureConnection()
+        public void EnsureConnection()
         {
             if (Multiplexer == null)
             {

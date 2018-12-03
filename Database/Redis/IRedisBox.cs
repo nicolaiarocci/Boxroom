@@ -10,6 +10,8 @@ namespace Boxroom.Database
         Task<T> Insert<T>(T item, TimeSpan? expiry);
         Task<List<T>> Insert<T>(List<T> items, TimeSpan? expiry);
         Task<T> Replace<T>(T item, TimeSpan? expiry);
+        Task<bool> Exists(string itemId);
+        Task<bool> Exists<T>(T item);
         IConnectionMultiplexer Multiplexer { get; set; }
     }
 }

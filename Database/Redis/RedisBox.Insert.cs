@@ -45,7 +45,7 @@ namespace Boxroom.Database
         private async Task<bool> Insert<T>(T item, IDatabase db, TimeSpan? expiry = null, When when = When.Always)
         {
             var obj = JsonConvert.SerializeObject(item);
-            var key = item.GetType().GetProperty(MetaFields.Id).GetValue(item).ToString();
+            var key = typeof(T).GetProperty(MetaFields.Id).GetValue(item).ToString();
             return await db.StringSetAsync(key, obj, expiry, when);
         }
     }
