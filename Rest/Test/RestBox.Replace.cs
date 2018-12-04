@@ -26,6 +26,7 @@ namespace Test
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint/" } };
             Box.Headers.Add("Test", "Value");
             Box.HttpClient = new HttpClient(GetMock<Class>(Box));
+
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Box.Replace<Class>(new Class()));
         }
 
