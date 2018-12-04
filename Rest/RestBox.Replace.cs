@@ -25,7 +25,11 @@ namespace Boxroom.Rest
             var (idMemberName, idMemberValue) = GetIdMemberNameAndValue<T>(item);
             if (idMemberName == null)
             {
-                // TODO throw?
+                throw new InvalidOperationException($"No id member has been mapped for type {typeof(T).ToString()}");
+            }
+            if (idMemberValue == null)
+            {
+                throw new InvalidOperationException($"Id member {idMemberName} has no value. A value per the Id member is needed in order to perform the {nameof(Replace)} operation.");
             }
 
             var client = PreparedClient();
@@ -33,7 +37,8 @@ namespace Boxroom.Rest
             var content = new StringContent(JsonConvert.SerializeObject(item));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            Response = await client.PutAsync($"{TargetEndpointNormalized<T>().ToString()}/{idMemberValue.ToString()}", content);
+            var endpoint = $"{TargetEndpointNormalized<T>().ToString()}/{idMemberValue.ToString()}";
+            Response = await client.PutAsync(endpoint, content);
             if (Response.StatusCode != HttpStatusCode.OK) return default(T);
 
             var json = await Response.Content.ReadAsStringAsync();

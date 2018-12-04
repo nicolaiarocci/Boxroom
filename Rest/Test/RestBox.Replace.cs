@@ -19,6 +19,15 @@ namespace Test
             var nullException = Assert.ThrowsAsync<ArgumentNullException>(async () => await Box.Replace<Class>(item: null));
             Assert.AreEqual("item", nullException.ParamName);
         }
+        [Test]
+        public void ReplaceThrowsWhenItemIdIsNull()
+        {
+            Box.BaseAddress = new Uri("https://testme.com");
+            Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint/" } };
+            Box.Headers.Add("Test", "Value");
+            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Box.Replace<Class>(new Class()));
+        }
 
         [Test]
         public void ReplacePropertiesAreValidated()
@@ -62,6 +71,7 @@ namespace Test
             mockHttp.When($"https://testme.com/endpoint/id")
                 .WithHeaders("Test", "Value")
                 .WithHeaders("Content-Type", "application/json")
+                .With(request => request.Method == HttpMethod.Put)
                 .Respond(HttpStatusCode.OK,
                     "application/json", @"
                         { 'Id' : 'id', 'Name': 'Item1', }");
