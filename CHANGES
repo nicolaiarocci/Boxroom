@@ -4,6 +4,11 @@ Changelog
 In Development
 ==============
 
+RestBox, WebApi v0.3.2
+======================
+
+Released on December 4, 2018.
+
 - New: RestBox.Get<T>(string Id) basic implementation.
 
 RestBox v0.3.1
