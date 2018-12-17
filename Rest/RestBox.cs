@@ -25,12 +25,15 @@ namespace Boxroom.Rest
             // TODO does this re/initializes a client every single time a call is made to this method?
             var client = (HttpClient != null) ? HttpClient : new HttpClient();
 
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var mediaType = new MediaTypeWithQualityHeaderValue("application/json");
+            client.DefaultRequestHeaders.Accept.Remove(mediaType);
+            client.DefaultRequestHeaders.Accept.Add(mediaType);
 
             if (Headers != null)
             {
                 foreach (var header in Headers)
                 {
+                    client.DefaultRequestHeaders.Remove(header.Key);
                     client.DefaultRequestHeaders.TryAddWithoutValidation(header.Key, header.Value);
                 }
             }
