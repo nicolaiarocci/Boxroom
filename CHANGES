@@ -4,6 +4,8 @@ Changelog
 In Development
 ==============
 
+- New: RestBox.Get<T>(string Id) basic implementation.
+
 RestBox v0.3.1
 ==============
 

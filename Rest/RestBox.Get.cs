@@ -30,5 +30,17 @@ namespace Boxroom.Rest
             var json = await Response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<T>>(json);
         }
+        public override async Task<T> Get<T>(string itemId)
+        {
+            ValidateProperties();
+
+            var client = PreparedClient();
+
+            Response = await client.GetAsync($"{TargetEndpointNormalized<T>().ToString()}/{itemId}");
+            if (Response.StatusCode != HttpStatusCode.OK) return default(T);
+
+            var json = await Response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(json);
+        }
     }
 }

@@ -10,32 +10,32 @@ using RichardSzalay.MockHttp;
 
 namespace Test
 {
-    public class RestBoxTestFind : RestBoxTestBase
+    public class RestBoxTestGet : RestBoxTestBase
     {
 
         [Test]
-        public void FindPropertiesAreValidated()
+        public void GetPropertiesAreValidated()
         {
-            PropertiesAreValidated(async () => await Box.Find<Class>(x => x.Name == "a name"));
+            PropertiesAreValidated(async () => await Box.Get<Class>("123"));
         }
 
         [Test]
-        public async Task FindSuccess()
+        public async Task GetByIdSuccess()
         {
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint" } };
             Box.Headers.Add("Test", "Value");
             Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
-            var results = await Box.Find<Class>(x => x.Name == "a name", new RestFindOptions<Class> { IfModifiedSince = DateTime.Now.Date });
+            var item = await Box.Get<Class>("123");
 
             Assert.AreEqual(HttpStatusCode.OK, Box.Response.StatusCode);
-            Assert.AreEqual(1, results.Count);
-            Assert.AreEqual("id", results[0].Id);
+            Assert.AreEqual("123", item.Id);
+            Assert.AreEqual("Item1", item.Name);
         }
 
         [Test]
-        public async Task FindFailure()
+        public async Task GetByIdFailure()
         {
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint" } };
@@ -44,20 +44,19 @@ namespace Test
 
             Box.BaseAddress = new Uri("https://failme.com");
 
-            var results = await Box.Find<Class>(x => x.Name == "a name", new RestFindOptions<Class> { IfModifiedSince = DateTime.Now.Date });
+            var item = await Box.Get<Class>("123");
 
             Assert.AreEqual(HttpStatusCode.NotFound, Box.Response.StatusCode);
-            Assert.IsNull(results);
+            Assert.IsNull(item);
         }
         protected override MockHttpMessageHandler GetMock<T>(Boxroom client)
         {
             var mockHttp = new MockHttpMessageHandler();
 
-            mockHttp.When($"{client.BaseAddress.ToString()}{client.DataSources[typeof(T)]}?test=me")
+            mockHttp.When($"{client.BaseAddress.ToString()}{client.DataSources[typeof(T)]}/123")
                 .WithHeaders("Test", "Value")
-                .WithHeaders("If-Modified-Since", DateTime.Now.Date.ToString("r"))
                 .Respond(HttpStatusCode.OK,
-                    "application/json", @"[{ 'Id' : 'id', 'Name': 'Item1', }]");
+                    "application/json", @"{ 'Id' : '123', 'Name': 'Item1', }");
 
             return mockHttp;
         }
