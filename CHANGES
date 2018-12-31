@@ -4,6 +4,13 @@ Changelog
 In Development
 ==============
 
+RestBox, WebApi v0.3.4
+======================
+
+Released on December 31, 2018.
+
+- New: build net461 specific target.
+
 RestBox, WebApi v0.3.3
 ======================
 
