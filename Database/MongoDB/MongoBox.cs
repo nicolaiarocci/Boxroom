@@ -11,6 +11,23 @@ namespace Boxroom.Database
 {
     public class MongoBox : DatabaseBox
     {
+        public override async Task<T> Get<T>(string itemId)
+        {
+            ValidateProperties();
+
+            var entity = Expression.Parameter(typeof(T));
+            var body = Expression.Equal(
+                Expression.Property(entity, MetaFields.Id),
+                Expression.Constant(itemId));
+            var filter = Expression.Lambda<Func<T, bool>>(body, entity);
+
+            return await Collection<T>().Find(filter).FirstOrDefaultAsync();
+        }
+        public override async Task<T> Get<T>(T item)
+        {
+            var key = typeof(T).GetProperty(MetaFields.Id).GetValue(item).ToString();
+            return await Get<T>(key);
+        }
         public override async Task<List<T>> Find<T>(Expression<Func<T, bool>> filter, IFindOptions<T> options = null)
         {
             ValidateProperties();
@@ -28,16 +45,6 @@ namespace Boxroom.Database
             }
 
             return (await Collection<T>().FindAsync(Builders<T>.Filter.And(filters))).ToList();
-        }
-        private Expression<Func<T, bool>> CreateIfModifiedFilterExperssion<T>(IFindOptions<T> options)
-        {
-            if (options == null || !options.IfModifiedSince.HasValue) return null;
-            var entity = Expression.Parameter(typeof(T));
-            var body = Expression.GreaterThan(
-                Expression.Property(entity, MetaFields.LastUpdated),
-                Expression.Constant(options.IfModifiedSince.GetValueOrDefault()));
-
-            return Expression.Lambda<Func<T, bool>>(body, entity);
         }
         public override async Task<List<T>> Insert<T>(List<T> items)
         {
@@ -77,6 +84,16 @@ namespace Boxroom.Database
             // performance should be optimized anyway (same connection string)
             var client = new MongoClient(ConnectionString);
             return client.GetDatabase(DataBaseName).GetCollection<T>(DataSources[typeof(T)]);
+        }
+        private Expression<Func<T, bool>> CreateIfModifiedFilterExperssion<T>(IFindOptions<T> options)
+        {
+            if (options == null || !options.IfModifiedSince.HasValue) return null;
+            var entity = Expression.Parameter(typeof(T));
+            var body = Expression.GreaterThan(
+                Expression.Property(entity, MetaFields.LastUpdated),
+                Expression.Constant(options.IfModifiedSince.GetValueOrDefault()));
+
+            return Expression.Lambda<Func<T, bool>>(body, entity);
         }
     }
 }

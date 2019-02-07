@@ -4,7 +4,9 @@ Changelog
 In Development
 ==============
 
-- New: MongoBox.InsertT(T item)
+- New: MongoBox.Get<T>(string itemId)
+- New: MongoBox.Get<T>(T item)
+- New: MongoBox.Insert<T>(T item)
 
 RestBox, WebApi v0.3.4
 ======================
