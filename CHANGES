@@ -4,6 +4,8 @@ Changelog
 In Development
 ==============
 
+- New: MongoBox.InsertT(T item)
+
 RestBox, WebApi v0.3.4
 ======================
 

@@ -45,6 +45,12 @@ namespace Boxroom.Database
             await Collection<T>().InsertManyAsync(items);
             return items;
         }
+        public override async Task<T> Insert<T>(T item)
+        {
+            ValidateProperties();
+            await Collection<T>().InsertOneAsync(item);
+            return item;
+        }
         public override async Task<T> Replace<T>(T item)
         {
             ValidateProperties();
