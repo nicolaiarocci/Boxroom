@@ -4,6 +4,7 @@ Changelog
 In Development
 ==============
 
+- New: MongoStringObjectIdIdGeneratorConvention helper class.
 - New: MongoBox.Get<T>(string itemId)
 - New: MongoBox.Get<T>(T item)
 - New: MongoBox.Insert<T>(T item)

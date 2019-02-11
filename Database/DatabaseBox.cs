@@ -13,8 +13,6 @@ namespace Boxroom.Database
         public override void ValidateProperties()
         {
 
-            // TODO: some (most) drivers will likely carry the db name with the connection string.
-            // Throwing here might be an option left to the concrete classes.
             if (DataBaseName == null)
             {
                 throw new ArgumentNullException(nameof(DataBaseName));
