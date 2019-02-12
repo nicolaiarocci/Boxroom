@@ -4,6 +4,11 @@ Changelog
 In Development
 ==============
 
+RestBox v0.3.5, MongoBox v0.2
+=============================
+
+Released on February 12, 2019.
+
 - New: RestBox.Insert<T>(T item)
 - New: MongoStringObjectIdIdGeneratorConvention helper class.
 - New: MongoBox.Get<T>(string itemId)
