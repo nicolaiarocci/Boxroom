@@ -5,7 +5,7 @@ namespace Boxroom.Database
 {
     /// <summary>
     /// Do not serialize type default values when saving to Mongo.
-    /// Use this ina ConventionPack, like this:
+    /// Use this in with a ConventionPack, see the example below.
     /// <example>
     /// <code>
     /// var pack = new ConventionPack { new MongoIgnoreDefaultPropertiesConvention() };

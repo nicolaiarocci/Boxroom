@@ -37,5 +37,25 @@ namespace Boxroom.Rest
             var json = await Response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<T>>(json);
         }
+        public override async Task<T> Insert<T>(T item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            ValidateProperties();
+
+            var client = PreparedClient();
+
+            var content = new StringContent(JsonConvert.SerializeObject(item));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            Response = await client.PostAsync($"{TargetEndpointNormalized<T>().ToString()}", content);
+            if (Response.StatusCode != HttpStatusCode.Created) return default(T);
+
+            var json = await Response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(json);
+        }
     }
 }
