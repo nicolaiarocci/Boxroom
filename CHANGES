@@ -4,6 +4,9 @@ Changelog
 In Development
 ==============
 
+RestBox WebApiBox v0.3.6 
+========================
+
 - New: WebApiBox.RenderAsQueryString() method.
 
 RestBox v0.3.5, MongoBox v0.2
