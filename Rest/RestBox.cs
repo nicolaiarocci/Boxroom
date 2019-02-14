@@ -18,7 +18,7 @@ namespace Boxroom.Rest
         public HttpClient HttpClient { get; set; }
         public HttpResponseMessage Response { get; set; }
         public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
-        public abstract string Render<T>(Expression<Func<T, bool>> filter);
+        public abstract string RenderAsQueryString<T>(Expression<Func<T, bool>> filter);
         public virtual HttpClient PreparedClient()
         {
 

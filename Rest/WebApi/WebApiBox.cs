@@ -14,16 +14,14 @@ namespace Boxroom.Rest
     public class WebApiBox : RestBox
 
     {
-        public override string Render<T>(Expression<Func<T, bool>> filter)
+        public override string RenderAsQueryString<T>(Expression<Func<T, bool>> filter)
         {
             if (filter == null)
             {
                 return null;
             }
-
-            // TODO actually parse 'filter'.
-            // By implementing a Expression Visitor pattern. See #8.
-            throw new NotImplementedException();
+            var visitor = new LambdaVisitor(filter);
+            return visitor.Visit();
         }
     }
 

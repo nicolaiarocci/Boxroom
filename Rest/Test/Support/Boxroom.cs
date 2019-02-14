@@ -6,7 +6,7 @@ namespace Test
 {
     public class Boxroom : RestBox
     {
-        public override string Render<T>(Expression<Func<T, bool>> filter)
+        public override string RenderAsQueryString<T>(Expression<Func<T, bool>> filter)
         {
             return "?test=me";
         }

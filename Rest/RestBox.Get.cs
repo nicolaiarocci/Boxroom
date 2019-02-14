@@ -20,7 +20,7 @@ namespace Boxroom.Rest
             // TODO: why do I have to explictly pass 'this', otherwise I get an error? Shoud be an extension method.
             EnsureHeader.IfModifiedSince(this, options);
 
-            var query = Render(filter);
+            var query = RenderAsQueryString(filter);
 
             var client = PreparedClient();
 
