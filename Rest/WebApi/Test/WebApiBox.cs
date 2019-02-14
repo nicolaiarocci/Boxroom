@@ -17,7 +17,7 @@ namespace Test
         public void RenderThrowsNotImplmented()
         {
             var updatedOn = DateTime.Now.Date;
-            var c = new Class { AProperty = "a field value" };
+            var c = new Class { AProperty = "a property value" };
             var box = new WebApiBox();
 
             var result = box.RenderAsQueryString<Class>(
@@ -29,7 +29,7 @@ namespace Test
                 x.UpdatedOn == updatedOn
                 );
 
-            Assert.AreEqual("?name=a%20name&aproperty=a%20field%20value&updatedon=Thu,%2014%20Feb%202019%2000:00:00%20GMT", result);
+            Assert.AreEqual("?Name=a%20name&AProperty=a%20property%20value&UpdatedOn=Thu,%2014%20Feb%202019%2000:00:00%20GMT", result);
         }
     }
 }

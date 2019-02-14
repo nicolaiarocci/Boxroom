@@ -18,7 +18,7 @@ namespace Boxroom.Rest
         {
             if (this.position == VisitorOption.Left)
             {
-                return node.Member.Name.ToLower();
+                return node.Member.Name;
             }
             else
             {
