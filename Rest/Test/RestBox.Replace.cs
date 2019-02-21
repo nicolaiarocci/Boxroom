@@ -25,7 +25,6 @@ namespace Test
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint/" } };
             Box.Headers.Add("Test", "Value");
-            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Box.Replace<Class>(new Class()));
         }
@@ -42,7 +41,6 @@ namespace Test
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint/" } };
             Box.Headers.Add("Test", "Value");
-            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
             var returnedItem = await Box.Replace<Class>(new Class { Name = "Item1", Id = "id" });
 
@@ -56,7 +54,6 @@ namespace Test
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint" } };
             Box.Headers.Add("Test", "Value");
-            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
             Box.BaseAddress = new Uri("https://failme.com");
 

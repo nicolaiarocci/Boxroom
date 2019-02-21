@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Boxroom.Rest;
 using NUnit.Framework;
@@ -16,6 +17,7 @@ namespace Test
         [SetUp]
         public void Setup()
         {
+            RestBox.HttpClient = new HttpClient(GetMock<Class>(Box));
             Box = new Boxroom();
         }
 

@@ -46,7 +46,6 @@ namespace Test
             { { typeof(Class), "endpoint" }
             };
             Box.Headers.Add("Test", "Value");
-            Box.HttpClient = new HttpClient(GetMock<Class>(Box, returnAsList: true));
 
             var items = new List<Class>
             { { new Class { Name = "Item1" } },
@@ -69,8 +68,6 @@ namespace Test
             };
             Box.Headers.Add("Test", "Value");
 
-            Box.HttpClient = new HttpClient(GetMock<Class>(Box, returnAsList: true));
-
             var items = new List<Class>
             { { new Class { Name = "Item1" } },
                 { new Class { Name = "Item2" } },
@@ -91,7 +88,6 @@ namespace Test
             { { typeof(Class), "endpoint" }
             };
             Box.Headers.Add("Test", "Value");
-            Box.HttpClient = new HttpClient(GetMock<Class>(Box, returnAsList: false));
 
             var returnedItem = await Box.Insert<Class>(new Class { Name = "a name" });
 

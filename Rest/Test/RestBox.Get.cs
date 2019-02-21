@@ -25,7 +25,6 @@ namespace Test
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint" } };
             Box.Headers.Add("Test", "Value");
-            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
             var item = await Box.Get<Class>("123");
 
@@ -40,7 +39,6 @@ namespace Test
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint" } };
             Box.Headers.Add("Test", "Value");
-            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
             Box.BaseAddress = new Uri("https://failme.com");
 
