@@ -4,6 +4,11 @@ Changelog
 In Development
 ==============
 
+RestBox WebApiBox v0.3.6 
+========================
+
+Released on April 16, 2019
+
 - New: RestBox.IAuthentication interface.
 - New; RestBox.BasicAuthentication class.
 - New: RestBox.Authentication property.
