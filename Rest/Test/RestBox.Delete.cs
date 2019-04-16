@@ -16,17 +16,17 @@ namespace Test
         [Test]
         public void DeleteThrowsWhenItemIdIsNullOrEmpty()
         {
-            var nullException = Assert.ThrowsAsync<ArgumentNullException>(async () => await Box.Delete<Class>(itemId: null));
+            var nullException = Assert.ThrowsAsync<ArgumentNullException>(async() => await Box.Delete<Class>(itemId: null));
             Assert.AreEqual("itemId", nullException.ParamName);
 
-            var argumentException = Assert.ThrowsAsync<ArgumentException>(async () => await Box.Delete<Class>(itemId: string.Empty));
+            var argumentException = Assert.ThrowsAsync<ArgumentException>(async() => await Box.Delete<Class>(itemId: string.Empty));
             Assert.AreEqual("itemId", argumentException.ParamName);
         }
 
         [Test]
         public void DeletePropertiesAreValidated()
         {
-            PropertiesAreValidated(async () => await Box.Delete<Class>("id"));
+            PropertiesAreValidated(async() => await Box.Delete<Class>("id"));
         }
 
         [Test]
@@ -37,6 +37,8 @@ namespace Test
             { { typeof(Class), "endpoint" }
             };
             Box.Headers.Add("Test", "Value");
+
+            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
             await Box.Delete<Class>("id");
 
@@ -51,6 +53,8 @@ namespace Test
             { { typeof(Class), "endpoint" }
             };
             Box.Headers.Add("Test", "Value");
+
+            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
             Box.BaseAddress = new Uri("https://failme.com");
 

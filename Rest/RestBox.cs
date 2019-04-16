@@ -15,7 +15,7 @@ namespace Boxroom.Rest
     {
         public override Core.MetaFields MetaFields { get; } = new MetaFields();
         public Uri BaseAddress { get; set; }
-        public static HttpClient HttpClient { get; set; }
+        public HttpClient HttpClient { get; set; }
         public HttpResponseMessage Response { get; set; }
         public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
         public abstract string RenderAsQueryString<T>(Expression<Func<T, bool>> filter);

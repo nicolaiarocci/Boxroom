@@ -25,6 +25,7 @@ namespace Test
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint" } };
             Box.Headers.Add("Test", "Value");
+            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
             var results = await Box.Find<Class>(x => x.Name == "a name", new RestFindOptions<Class> { IfModifiedSince = DateTime.Now.Date });
 
@@ -39,6 +40,7 @@ namespace Test
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint" } };
             Box.Headers.Add("Test", "Value");
+            Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
             Box.BaseAddress = new Uri("https://failme.com");
 
