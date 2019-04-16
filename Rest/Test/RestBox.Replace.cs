@@ -24,6 +24,7 @@ namespace Test
         {
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint/" } };
+            Box.Authentication = new BasicAuthentication { Username = "user", Password = "pw" };
             Box.Headers.Add("Test", "Value");
             Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
@@ -41,6 +42,7 @@ namespace Test
         {
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint/" } };
+            Box.Authentication = new BasicAuthentication { Username = "user", Password = "pw" };
             Box.Headers.Add("Test", "Value");
             Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
@@ -55,6 +57,7 @@ namespace Test
         {
             Box.BaseAddress = new Uri("https://testme.com");
             Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint" } };
+            Box.Authentication = new BasicAuthentication { Username = "user", Password = "pw" };
             Box.Headers.Add("Test", "Value");
             Box.HttpClient = new HttpClient(GetMock<Class>(Box));
 
@@ -70,6 +73,7 @@ namespace Test
             var mockHttp = new MockHttpMessageHandler();
 
             mockHttp.When($"https://testme.com/endpoint/id")
+                .WithHeaders("Authorization", "Basic dXNlcjpwdw==")
                 .WithHeaders("Test", "Value")
                 .WithHeaders("Content-Type", "application/json")
                 .With(request => request.Method == HttpMethod.Put)

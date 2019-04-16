@@ -36,6 +36,7 @@ namespace Test
             Box.DataSources = new Dictionary<Type, string>
             { { typeof(Class), "endpoint" }
             };
+            Box.Authentication = new BasicAuthentication { Username = "user", Password = "pw" };
             Box.Headers.Add("Test", "Value");
 
             Box.HttpClient = new HttpClient(GetMock<Class>(Box));
@@ -49,9 +50,8 @@ namespace Test
         public async Task DeleteFailure()
         {
             Box.BaseAddress = new Uri("https://testme.com");
-            Box.DataSources = new Dictionary<Type, string>
-            { { typeof(Class), "endpoint" }
-            };
+            Box.DataSources = new Dictionary<Type, string> { { typeof(Class), "endpoint" } };
+            Box.Authentication = new BasicAuthentication { Username = "user", Password = "pw" };
             Box.Headers.Add("Test", "Value");
 
             Box.HttpClient = new HttpClient(GetMock<Class>(Box));
@@ -67,6 +67,7 @@ namespace Test
             var mockHttp = new MockHttpMessageHandler();
 
             mockHttp.When($"{client.BaseAddress.ToString()}{client.DataSources[typeof(T)]}/id")
+                .WithHeaders("Authorization", "Basic dXNlcjpwdw==")
                 .WithHeaders("Test", "Value")
                 .Respond(HttpStatusCode.NoContent);
 

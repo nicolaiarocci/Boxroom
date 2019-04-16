@@ -19,6 +19,7 @@ namespace Test
             Assert.IsNull(Box.DataSources);
             Assert.IsNull(Box.HttpClient);
             Assert.IsNull(Box.Response);
+            Assert.IsNull(Box.Authentication);
             Assert.IsNotNull(Box.MetaFields);
             Assert.AreEqual(0, Box.Headers.Count);
         }

@@ -13,6 +13,7 @@ namespace Boxroom.Rest
         HttpClient HttpClient { get; set; }
         HttpResponseMessage Response { get; set; }
         Dictionary<string, string> Headers { get; set; }
+        IAuthentication Authentication { get; set; }
         string RenderAsQueryString<T>(Expression<Func<T, bool>> filter);
     }
 }

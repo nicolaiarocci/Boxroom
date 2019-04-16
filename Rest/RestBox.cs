@@ -18,6 +18,8 @@ namespace Boxroom.Rest
         public HttpClient HttpClient { get; set; }
         public HttpResponseMessage Response { get; set; }
         public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
+        public IAuthentication Authentication { get; set; }
+
         public abstract string RenderAsQueryString<T>(Expression<Func<T, bool>> filter);
         public virtual HttpClient PreparedClient()
         {
@@ -28,6 +30,17 @@ namespace Boxroom.Rest
             var mediaType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Remove(mediaType);
             client.DefaultRequestHeaders.Accept.Add(mediaType);
+
+            client.DefaultRequestHeaders.Remove("Authorization");
+            if (Authentication != null)
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Basic",
+                    Convert.ToBase64String(
+                        System.Text.ASCIIEncoding.ASCII.GetBytes(
+                            string.Format(
+                                "{0}:{1}", Authentication.Username.ToString(), Authentication.Password.ToString()))));
+            }
 
             if (Headers != null)
             {

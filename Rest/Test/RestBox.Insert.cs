@@ -45,6 +45,7 @@ namespace Test
             Box.DataSources = new Dictionary<Type, string>
             { { typeof(Class), "endpoint" }
             };
+            Box.Authentication = new BasicAuthentication { Username = "user", Password = "pw" };
             Box.Headers.Add("Test", "Value");
             Box.HttpClient = new HttpClient(GetMock<Class>(Box, returnAsList: true));
 
@@ -67,6 +68,7 @@ namespace Test
             Box.DataSources = new Dictionary<Type, string>
             { { typeof(Class), "endpoint" }
             };
+            Box.Authentication = new BasicAuthentication { Username = "user", Password = "pw" };
             Box.Headers.Add("Test", "Value");
 
             Box.HttpClient = new HttpClient(GetMock<Class>(Box, returnAsList: true));
@@ -90,6 +92,7 @@ namespace Test
             Box.DataSources = new Dictionary<Type, string>
             { { typeof(Class), "endpoint" }
             };
+            Box.Authentication = new BasicAuthentication { Username = "user", Password = "pw" };
             Box.Headers.Add("Test", "Value");
             Box.HttpClient = new HttpClient(GetMock<Class>(Box, returnAsList: false));
 
@@ -113,6 +116,7 @@ namespace Test
             var mockHttp = new MockHttpMessageHandler();
 
             mockHttp.When($"{client.BaseAddress.ToString()}{client.DataSources[typeof(T)]}")
+                .WithHeaders("Authorization", "Basic dXNlcjpwdw==")
                 .WithHeaders("Test", "Value")
                 .WithHeaders("Content-Type", "application/json")
                 .Respond(HttpStatusCode.Created,

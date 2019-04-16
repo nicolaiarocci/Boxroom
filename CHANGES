@@ -4,6 +4,11 @@ Changelog
 In Development
 ==============
 
+- New: RestBox.IAuthentication interface.
+- New; RestBox.BasicAuthentication class.
+- New: RestBox.Authentication property.
+- RestBox can now authenticate a request, provided the Authentication property has been set.
+
 RestBox WebApiBox v0.3.6 
 ========================
 
